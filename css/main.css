@@ -133,6 +133,18 @@ body {
           filter: invert(100%);
 }
 
+.upload-filter-label-marvin .upload-filter-preview,
+.filter-phobos {
+  -webkit-filter: saturate(100%);
+          filter: saturate(100%);
+}
+
+.upload-filter-label-marvin .upload-filter-preview,
+.filter-heat {
+  -webkit-filter: brightness(100%);
+          filter: brightness(100%);
+}
+
 .upload-input {
   visibility: hidden;
 }
