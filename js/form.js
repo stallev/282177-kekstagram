@@ -9,9 +9,8 @@ var uploadFormCancel = document.querySelector('.upload-form-cancel');
 // main image
 var mainImage = document.querySelector('.upload-form-preview > img');
 var uploadForm = uploadOverlay.querySelector('form');
-
+// getting array of the filter input
 var controls = uploadForm.elements['upload-filter'];
-console.log(controls.length);
 // filters list
 var filters =
     ['filter-chrome',
@@ -22,25 +21,42 @@ var filters =
 
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
+
 // changing the value of the upload file field
 if(uploadFile !== 0) {
   uploadOverlay.classList.remove('invisible');
   uploadSelectImage.classList.add('invisible');
 }
-//closing image button event
+// closing image button event
 uploadFormCancel.addEventListener('click', function () {
   uploadOverlay.classList.add('invisible');
   uploadSelectImage.classList.remove('invisible');
 });
+// changing filters for the image
 for (var i = 0; i < controls.length; i++){
-  if(controls[i].checked) {
-    if(i === 0) {
-      console.log('первый');
+  checkControl(controls[i]);
+}
+// creating event listener for radio
+function checkControl (control) {
+  control.addEventListener('click', function() {
+    toogleFilter(control);
+  });
+}
+function toogleFilter(control) {
+  if (control === 0) {
+    console.log('первый');
+    return;
+  }
+  mainImage.className = '';
+  mainImage.classList.add('filter-image-preview');
+  addingClass(control);
+}
+function addingClass(control) {
+  // seaching number of the member of the array
+  for(var z = 0; z < controls.length; z++) {
+    if(controls[z] == control) {
+      mainImage.classList.add(filters[z - 1]);
+      break;
     }
-    //mainImage.className = '';
-    console.log(12);
-    mainImage.classList.add('filter-image-preview');
-    console.log(filters[i]);
-    mainImage.classList.add(filters[i - 1]);
   }
 }
