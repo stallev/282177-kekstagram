@@ -31,7 +31,6 @@ var imageSizeValue = 100;
 var imageSizeStep = 25;
 var minImageSize = 25;
 var maxImageSize = 100;
-var imageSize;
 
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
@@ -50,7 +49,7 @@ uploadFormCancel.addEventListener('click', function () {
   var deletedClass = mainImage.classList.item(1);
   mainImage.classList.remove(deletedClass);
   // adding original size to main image
-  resizeMainPicture(100);
+  resizeMainPicture(1);
 });
 
 // changing filters for the image
@@ -66,16 +65,8 @@ function checkControl(control) {
 }
 
 function toogleFilter(control) {
-  if (control === 0) {
-    return;
-  }
   var deletedClass = mainImage.classList.item(1);
   mainImage.classList.remove(deletedClass);
-  addingClass(control);
-}
-
-// adding class of the new filter to main image
-function addingClass(control) {
   mainImage.classList.add('filter-' + control.value);
 }
 
@@ -83,8 +74,7 @@ function addingClass(control) {
 decreaseButton.addEventListener('click', function () {
   if (imageSizeValue > minImageSize) {
     imageSizeValue -= imageSizeStep;
-    imageSize = imageSizeValue;
-    resizeMainPicture(imageSize);
+    resizeMainPicture(imageSizeValue / 100);
   }
 });
 
@@ -92,14 +82,12 @@ decreaseButton.addEventListener('click', function () {
 zoomButton.addEventListener('click', function () {
   if (imageSizeValue < maxImageSize) {
     imageSizeValue += imageSizeStep;
-    imageSize = imageSizeValue;
-    resizeMainPicture(imageSize);
+    resizeMainPicture(imageSizeValue / 100);
   }
 });
 
 function resizeMainPicture(size) {
-  mainImage.style.transform = 'scale(' + size / 100 + ',' + size / 100 + ')';
-  mainImage.style.webkitTransform = 'scale(' + size / 100 + ',' + size / 100 + ')';
-  imageSizeField.value = '';
-  imageSizeField.value = size + '%';
+  mainImage.style.transform = 'scale(' + size + ')';
+  mainImage.style.webkitTransform = 'scale(' + size + ')';
+  imageSizeField.value = size * 100 + '%';
 }
