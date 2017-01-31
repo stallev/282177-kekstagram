@@ -41,14 +41,13 @@ uploadFile.addEventListener('click', function () {
   uploadOverlay.classList.remove('invisible');
   uploadSelectImage.classList.add('invisible');
 });
+
 // closing image button event
 uploadFormCancel.addEventListener('click', function () {
   uploadOverlay.classList.add('invisible');
   uploadSelectImage.classList.remove('invisible');
   // deleting unnessesary styles
-  var deletedClass = mainImage.classList.item(1);
-  mainImage.classList.remove(deletedClass);
-  // adding original size to main image
+  deleteFilter();
   resizeMainPicture(1);
 });
 
@@ -65,9 +64,14 @@ function checkControl(control) {
 }
 
 function toogleFilter(control) {
-  var deletedClass = mainImage.classList.item(1);
-  mainImage.classList.remove(deletedClass);
+  deleteFilter();
   mainImage.classList.add('filter-' + control.value);
+}
+
+function deleteFilter() {
+  for (i = 0; i < controls.length; i++) {
+    mainImage.classList.remove('filter-' + controls[i].value);
+  }
 }
 
 // decreasing image
