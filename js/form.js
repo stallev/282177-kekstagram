@@ -31,6 +31,7 @@ var imageSizeValue = 100;
 var imageSizeStep = 25;
 var minImageSize = 25;
 var maxImageSize = 100;
+var imageSize;
 
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
@@ -45,6 +46,11 @@ uploadFile.addEventListener('click', function () {
 uploadFormCancel.addEventListener('click', function () {
   uploadOverlay.classList.add('invisible');
   uploadSelectImage.classList.remove('invisible');
+  // deleting unnessesary styles
+  var deletedClass = mainImage.classList.item(1);
+  mainImage.classList.remove(deletedClass);
+  // adding original size to main image
+  resizeMainPicture(100);
 });
 
 // changing filters for the image
@@ -77,7 +83,8 @@ function addingClass(control) {
 decreaseButton.addEventListener('click', function () {
   if (imageSizeValue > minImageSize) {
     imageSizeValue -= imageSizeStep;
-    resizeMainPicture();
+    imageSize = imageSizeValue;
+    resizeMainPicture(imageSize);
   }
 });
 
@@ -85,13 +92,14 @@ decreaseButton.addEventListener('click', function () {
 zoomButton.addEventListener('click', function () {
   if (imageSizeValue < maxImageSize) {
     imageSizeValue += imageSizeStep;
-    resizeMainPicture();
+    imageSize = imageSizeValue;
+    resizeMainPicture(imageSize);
   }
 });
 
-function resizeMainPicture() {
-  mainImage.style.transform = 'scale(' + imageSizeValue / 100 + ',' + imageSizeValue / 100 + ')';
-  mainImage.style.webkitTransform = 'scale(' + imageSizeValue / 100 + ',' + imageSizeValue / 100 + ')';
+function resizeMainPicture(size) {
+  mainImage.style.transform = 'scale(' + size / 100 + ',' + size / 100 + ')';
+  mainImage.style.webkitTransform = 'scale(' + size / 100 + ',' + size / 100 + ')';
   imageSizeField.value = '';
-  imageSizeField.value = imageSizeValue + '%';
+  imageSizeField.value = size + '%';
 }
