@@ -19,12 +19,8 @@ var controls = uploadForm.elements['upload-filter'];
 
 // controls fieldset, for common addEventListener
 var controlsWrapper = document.querySelector('.upload-filter-controls');
-
 var zoomButton = document.querySelector('.upload-resize-controls-button-inc');
-
 var decreaseButton = document.querySelector('.upload-resize-controls-button-dec');
-
-
 var imageSizeField = document.querySelector('.upload-resize-controls-value');
 
 // default values
@@ -38,18 +34,11 @@ var ESC_KEY_CODE = 27;
 
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
-
 uploadFile.addEventListener('click', onClickUploadImageWindowOpening);
-
 uploadFile.addEventListener('keydown', onKeyboardUploadImageWindowOpening);
-
 uploadFormCancel.addEventListener('click', onClickUploadImageWindowClosing);
 document.addEventListener('keydown', onKeyboardUploadImageWindowClosing);
-
-
 controlsWrapper.addEventListener('click', onClickChangeImageFilter);
-
-
 controlsWrapper.addEventListener('keydown', onKeyboardChangeImageFilter);
 
 function toogleFilter(target) {
@@ -87,7 +76,6 @@ function changeInputChecked() {
   }
 }
 
-// decreasing image
 decreaseButton.addEventListener('click', function () {
   if (imageSizeValue > minImageSize) {
     imageSizeValue -= imageSizeStep;
@@ -95,7 +83,6 @@ decreaseButton.addEventListener('click', function () {
   }
 });
 
-// zooming image
 zoomButton.addEventListener('click', function () {
   if (imageSizeValue < maxImageSize) {
     imageSizeValue += imageSizeStep;
@@ -114,7 +101,6 @@ function onClickUploadImageWindowOpening() {
   uploadOverlay.classList.remove('invisible');
   uploadSelectImage.classList.add('invisible');
 }
-
 function onKeyboardUploadImageWindowOpening(event) {
   if (activateEvent(event)) {
     event.preventDefault();
@@ -122,7 +108,6 @@ function onKeyboardUploadImageWindowOpening(event) {
     uploadSelectImage.classList.add('invisible');
   }
 }
-
 function onClickUploadImageWindowClosing() {
   uploadOverlay.classList.add('invisible');
   uploadSelectImage.classList.remove('invisible');
@@ -130,7 +115,6 @@ function onClickUploadImageWindowClosing() {
   deleteFilter();
   resizeMainPicture(1);
 }
-
 function onKeyboardUploadImageWindowClosing(event) {
   if (escapeEvent(event)) {
     uploadOverlay.classList.add('invisible');
