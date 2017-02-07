@@ -15,13 +15,13 @@ var mainImage = document.querySelector('.upload-form-preview > img');
 
 var uploadForm = uploadOverlay.querySelector('form');
 
+var smDiv = document.querySelector('.upload-filter-preview');
+
 // getting array of the filter input
 var controls = uploadForm.elements['upload-filter'];
 
 // controls fieldset, for common addEventListener
 var controlsWrapper = document.querySelector('.upload-filter-controls');
-
-var controlsLabels = controlsWrapper.querySelectorAll('label');
 
 // zoom button
 var zoomButton = document.querySelector('.upload-resize-controls-button-inc');
@@ -51,8 +51,8 @@ uploadFile.addEventListener('click', function () {
 });
 
 // changing the value of the upload file field using the keyboard
-uploadFile.addEventListener('click', function () {
-  if (isActivateEvent(event)) {
+uploadFile.addEventListener('keydown', function (event) {
+  if (activateEvent(event)) {
     event.preventDefault();
     uploadOverlay.classList.remove('invisible');
     uploadSelectImage.classList.add('invisible');
@@ -68,8 +68,8 @@ uploadFormCancel.addEventListener('click', function () {
   resizeMainPicture(1);
 });
 // closing image button event using the keyboard
-uploadFormCancel.addEventListener('click', function () {
-  if (isActivateEvent(event)) {
+uploadFormCancel.addEventListener('keydown', function (event) {
+  if (activateEvent(event)) {
     uploadOverlay.classList.add('invisible');
     uploadSelectImage.classList.remove('invisible');
     // deleting unnessesary styles
@@ -79,25 +79,26 @@ uploadFormCancel.addEventListener('click', function () {
 });
 
 controlsWrapper.addEventListener('click', function (event) {
+  event.preventDefault();
   toogleFilter(event.target);
 });
 
 controlsWrapper.addEventListener('keydown', function (event) {
-  if (isActivateEvent(event)) {
+  if (activateEvent(event)) {
     toogleFilter(event.target);
   }
 });
 
-var isActivateEvent = function activateEvent(evt) {
+function activateEvent(evt) {
   return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
-};
+}
 
 function toogleFilter(target) {
   deleteFilter();
   // make all attributes area-checked false
-  deletingArChck(controlsLabels);
+  deletingArChck(smDiv);
   tooglingAria(target);
-  mainImage.classList.add('filter-' + target.value);
+  mainImage.classList.add(target.parentNode.getAttribute('for').substr(7));
 }
 
 function deleteFilter() {
