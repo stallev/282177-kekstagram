@@ -59,8 +59,8 @@ function toogleFilter(target) {
   // make all attributes area-checked false
   deletingAreaChecked(targetDivs);
   tooglingAria(target);
-  //changeInputChecked(target);
-  mainImage.classList.add(target.parentNode.getAttribute('for').substr(7));
+  mainImage.classList.add('filter-' + target.parentNode.previousElementSibling.value);
+  changeInputChecked(target);
 }
 
 function deleteFilter() {
@@ -81,12 +81,13 @@ function tooglingAria(div) {
   div.setAttribute('aria-checked', !pressed);
 }
 
-/*function changeInputChecked(targetDiv) {
+function changeInputChecked() {
   for(var k = 0; k < targetDivs.length; k++) {
-    if (!targetDivs[k].parentNode.previousElementSibling.remove('checked'))
-    targetDiv[k].parentNode.previousElementSibling.setAttribute('checked');
+    if (targetDivs[k].parentNode.previousElementSibling.hasAttribute('checked')) {
+      targetDivs[k].parentNode.previousElementSibling.removeAttribute('checked');
+    }
   }
-}*/
+}
 
 // decreasing image
 decreaseButton.addEventListener('click', function () {
