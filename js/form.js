@@ -1,21 +1,20 @@
 'use strict';
 var uploadOverlay = document.querySelector('.upload-overlay');
 
-// upload image window
+
+
 var uploadSelectImage = document.getElementById('upload-select-image');
 
-// upload file field
 var uploadFile = document.querySelector('.upload-file');
 
 // closing image button
 var uploadFormCancel = document.querySelector('.upload-form-cancel');
 
-// main image
 var mainImage = document.querySelector('.upload-form-preview > img');
 
 var uploadForm = uploadOverlay.querySelector('form');
 
-var smDiv = document.querySelector('.upload-filter-preview');
+var targetDivs = document.querySelectorAll('.upload-filter-preview');
 
 // getting array of the filter input
 var controls = uploadForm.elements['upload-filter'];
@@ -23,13 +22,11 @@ var controls = uploadForm.elements['upload-filter'];
 // controls fieldset, for common addEventListener
 var controlsWrapper = document.querySelector('.upload-filter-controls');
 
-// zoom button
 var zoomButton = document.querySelector('.upload-resize-controls-button-inc');
 
-// decrease button
 var decreaseButton = document.querySelector('.upload-resize-controls-button-dec');
 
-// image size field
+
 var imageSizeField = document.querySelector('.upload-resize-controls-value');
 
 // default values
@@ -44,65 +41,25 @@ var ESC_KEY_CODE = 27;
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
 
-// changing the value of the upload file field
-uploadFile.addEventListener('click', function () {
-  event.preventDefault();
-  uploadOverlay.classList.remove('invisible');
-  uploadSelectImage.classList.add('invisible');
-});
+uploadFile.addEventListener('click', onClickUploadImageWindowOpening);
 
-// changing the value of the upload file field using the keyboard
-uploadFile.addEventListener('keydown', function (event) {
-  if (activateEvent(event)) {
-    event.preventDefault();
-    uploadOverlay.classList.remove('invisible');
-    uploadSelectImage.classList.add('invisible');
-  }
-});
+uploadFile.addEventListener('keydown', onKeyboardUploadImageWindowOpening);
 
-// closing image button event
-uploadFormCancel.addEventListener('click', function () {
-  uploadOverlay.classList.add('invisible');
-  uploadSelectImage.classList.remove('invisible');
-  // deleting unnessesary styles
-  deleteFilter();
-  resizeMainPicture(1);
-});
-// closing image button event using the keyboard
-document.addEventListener('keydown', function (event) {
-  if (escapeEvent(event)) {
-    uploadOverlay.classList.add('invisible');
-    uploadSelectImage.classList.remove('invisible');
-    // deleting unnessesary styles
-    deleteFilter();
-    resizeMainPicture(1);
-  }
-});
+uploadFormCancel.addEventListener('click', onClickUploadImageWindowClosing);
+document.addEventListener('keydown', onKeyboardUploadImageWindowClosing);
 
-controlsWrapper.addEventListener('click', function (event) {
-  event.preventDefault();
-  toogleFilter(event.target);
-});
 
-controlsWrapper.addEventListener('keydown', function (event) {
-  if (activateEvent(event)) {
-    toogleFilter(event.target);
-  }
-});
+controlsWrapper.addEventListener('click', onClickChangeImageFilter);
 
-function activateEvent(evt) {
-  return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
-}
 
-function escapeEvent(evt) {
-  return (evt.keyCode && evt.keyCode === ESC_KEY_CODE);
-}
+controlsWrapper.addEventListener('keydown', onKeyboardChangeImageFilter);
 
 function toogleFilter(target) {
   deleteFilter();
   // make all attributes area-checked false
-  deletingArChck(smDiv);
+  deletingAreaChecked(targetDivs);
   tooglingAria(target);
+  //changeInputChecked(target);
   mainImage.classList.add(target.parentNode.getAttribute('for').substr(7));
 }
 
@@ -112,17 +69,24 @@ function deleteFilter() {
   }
 }
 
-function deletingArChck(ob) {
-  for (var z = 0; z < ob.length; z++) {
-    ob[z].setAttribute('aria-checked', 'false');
+function deletingAreaChecked(array) {
+  for (var j = 0; j < array.length; j++) {
+    array[j].setAttribute('aria-checked', 'false');
   }
 }
 
 // toogling aria-checked
-function tooglingAria(label) {
-  var pressed = (label.getAttribute('aria-checked' === 'true'));
-  label.setAttribute('aria-checked', !pressed);
+function tooglingAria(div) {
+  var pressed = (div.getAttribute('aria-checked') === 'true');
+  div.setAttribute('aria-checked', !pressed);
 }
+
+/*function changeInputChecked(targetDiv) {
+  for(var k = 0; k < targetDivs.length; k++) {
+    if (!targetDivs[k].parentNode.previousElementSibling.remove('checked'))
+    targetDiv[k].parentNode.previousElementSibling.setAttribute('checked');
+  }
+}*/
 
 // decreasing image
 decreaseButton.addEventListener('click', function () {
@@ -144,4 +108,55 @@ function resizeMainPicture(size) {
   mainImage.style.transform = 'scale(' + size + ')';
   mainImage.style.webkitTransform = 'scale(' + size + ')';
   imageSizeField.value = size * 100 + '%';
+}
+
+function onClickUploadImageWindowOpening() {
+  event.preventDefault();
+  uploadOverlay.classList.remove('invisible');
+  uploadSelectImage.classList.add('invisible');
+}
+
+function onKeyboardUploadImageWindowOpening(event) {
+  if (activateEvent(event)) {
+    event.preventDefault();
+    uploadOverlay.classList.remove('invisible');
+    uploadSelectImage.classList.add('invisible');
+  }
+}
+
+function onClickUploadImageWindowClosing() {
+  uploadOverlay.classList.add('invisible');
+  uploadSelectImage.classList.remove('invisible');
+  // deleting unnessesary styles
+  deleteFilter();
+  resizeMainPicture(1);
+}
+
+function onKeyboardUploadImageWindowClosing(event) {
+  if (escapeEvent(event)) {
+    uploadOverlay.classList.add('invisible');
+    uploadSelectImage.classList.remove('invisible');
+    // deleting unnessesary styles
+    deleteFilter();
+    resizeMainPicture(1);
+  }
+}
+function onKeyboardChangeImageFilter(event) {
+  if (activateEvent(event)) {
+    toogleFilter(event.target);
+  }
+}
+function onClickChangeImageFilter(event) {
+  event.preventDefault();
+  if (!event.target.classList.contains('upload-filter-preview')) {
+    return;
+  }
+  toogleFilter(event.target);
+}
+function activateEvent(evt) {
+  return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
+}
+
+function escapeEvent(evt) {
+  return (evt.keyCode && evt.keyCode === ESC_KEY_CODE);
 }
