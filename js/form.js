@@ -1,8 +1,6 @@
 'use strict';
 var uploadOverlay = document.querySelector('.upload-overlay');
 
-
-
 var uploadSelectImage = document.getElementById('upload-select-image');
 
 var uploadFile = document.querySelector('.upload-file');
@@ -82,7 +80,7 @@ function tooglingAria(div) {
 }
 
 function changeInputChecked() {
-  for(var k = 0; k < targetDivs.length; k++) {
+  for (var k = 0; k < targetDivs.length; k++) {
     if (targetDivs[k].parentNode.previousElementSibling.hasAttribute('checked')) {
       targetDivs[k].parentNode.previousElementSibling.removeAttribute('checked');
     }
