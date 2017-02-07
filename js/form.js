@@ -39,6 +39,7 @@ var minImageSize = 25;
 var maxImageSize = 100;
 
 var ENTER_KEY_CODE = 13;
+var ESC_KEY_CODE = 27;
 
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
@@ -68,8 +69,8 @@ uploadFormCancel.addEventListener('click', function () {
   resizeMainPicture(1);
 });
 // closing image button event using the keyboard
-uploadFormCancel.addEventListener('keydown', function (event) {
-  if (activateEvent(event)) {
+document.addEventListener('keydown', function (event) {
+  if (escapeEvent(event)) {
     uploadOverlay.classList.add('invisible');
     uploadSelectImage.classList.remove('invisible');
     // deleting unnessesary styles
@@ -91,6 +92,10 @@ controlsWrapper.addEventListener('keydown', function (event) {
 
 function activateEvent(evt) {
   return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
+}
+
+function escapeEvent(evt) {
+  return (evt.keyCode && evt.keyCode === ESC_KEY_CODE);
 }
 
 function toogleFilter(target) {
