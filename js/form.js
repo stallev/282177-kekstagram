@@ -12,7 +12,7 @@ var mainImage = document.querySelector('.upload-form-preview > img');
 
 var uploadForm = uploadOverlay.querySelector('form');
 
-var targetDivs = document.querySelectorAll('.upload-filter-preview');
+var clickableRadioArea = document.querySelectorAll('.upload-filter-preview');
 
 // getting array of the filter input
 var controls = uploadForm.elements['upload-filter'];
@@ -34,18 +34,18 @@ var ESC_KEY_CODE = 27;
 
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
-uploadFile.addEventListener('click', onClickUploadImageWindowOpening);
-uploadFile.addEventListener('keydown', onKeyboardUploadImageWindowOpening);
-uploadFormCancel.addEventListener('click', onClickUploadImageWindowClosing);
-document.addEventListener('keydown', onKeyboardUploadImageWindowClosing);
+uploadFile.addEventListener('click', onClickUploadImageOpening);
+uploadFile.addEventListener('keydown', onEnterUploadImageOpening);
+uploadFormCancel.addEventListener('click', onClickUploadImageClosing);
+document.addEventListener('keydown', onEscapeUploadImageClosing);
 controlsWrapper.addEventListener('click', onClickChangeImageFilter);
-controlsWrapper.addEventListener('keydown', onKeyboardChangeImageFilter);
+controlsWrapper.addEventListener('keydown', onEnterChangeImageFilter);
 
-function toogleFilter(target) {
+function toggleFilter(target) {
   deleteFilter();
   // make all attributes area-checked false
-  deletingAreaChecked(targetDivs);
-  tooglingAria(target);
+  deletingAreaChecked(clickableRadioArea);
+  togglingAria(target);
   mainImage.classList.add('filter-' + target.parentNode.previousElementSibling.value);
   changeInputChecked(target);
 }
@@ -57,21 +57,22 @@ function deleteFilter() {
 }
 
 function deletingAreaChecked(array) {
-  for (var j = 0; j < array.length; j++) {
-    array[j].setAttribute('aria-checked', 'false');
+  for (var i = 0; i < array.length; i++) {
+    array[i].setAttribute('aria-checked', 'false');
   }
 }
 
-// toogling aria-checked
-function tooglingAria(div) {
-  var pressed = (div.getAttribute('aria-checked') === 'true');
-  div.setAttribute('aria-checked', !pressed);
+// toggling aria-checked
+function togglingAria(ariaCheckedTrueControl) {
+  var pressed = (ariaCheckedTrueControl.getAttribute('aria-checked') === 'true');
+  ariaCheckedTrueControl.setAttribute('aria-checked', !pressed);
 }
 
 function changeInputChecked() {
-  for (var k = 0; k < targetDivs.length; k++) {
-    if (targetDivs[k].parentNode.previousElementSibling.hasAttribute('checked')) {
-      targetDivs[k].parentNode.previousElementSibling.removeAttribute('checked');
+  for (var i = 0; i < clickableRadioArea.length; i++) {
+    var targetRadioInput = clickableRadioArea[i].parentNode.previousElementSibling;
+    if (targetRadioInput.hasAttribute('checked')) {
+      targetRadioInput.removeAttribute('checked');
     }
   }
 }
@@ -96,47 +97,59 @@ function resizeMainPicture(size) {
   imageSizeField.value = size * 100 + '%';
 }
 
-function onClickUploadImageWindowOpening() {
+function onClickUploadImageOpening() {
   event.preventDefault();
+  uploadImageOpening();
+}
+
+function onEnterUploadImageOpening(event) {
+  if (enterEvent(event)) {
+    event.preventDefault();
+    uploadImageOpening();
+  }
+}
+
+function uploadImageOpening() {
   uploadOverlay.classList.remove('invisible');
   uploadSelectImage.classList.add('invisible');
 }
-function onKeyboardUploadImageWindowOpening(event) {
-  if (activateEvent(event)) {
-    event.preventDefault();
-    uploadOverlay.classList.remove('invisible');
-    uploadSelectImage.classList.add('invisible');
-  }
-}
-function onClickUploadImageWindowClosing() {
+
+function uploadImageClosing() {
   uploadOverlay.classList.add('invisible');
   uploadSelectImage.classList.remove('invisible');
+}
+
+function onClickUploadImageClosing() {
+  uploadImageClosing();
   // deleting unnessesary styles
   deleteFilter();
   resizeMainPicture(1);
 }
-function onKeyboardUploadImageWindowClosing(event) {
+
+function onEscapeUploadImageClosing(event) {
   if (escapeEvent(event)) {
-    uploadOverlay.classList.add('invisible');
-    uploadSelectImage.classList.remove('invisible');
+    uploadImageClosing();
     // deleting unnessesary styles
     deleteFilter();
     resizeMainPicture(1);
   }
 }
-function onKeyboardChangeImageFilter(event) {
-  if (activateEvent(event)) {
-    toogleFilter(event.target);
+
+function onEnterChangeImageFilter(event) {
+  if (enterEvent(event)) {
+    toggleFilter(event.target);
   }
 }
+
 function onClickChangeImageFilter(event) {
   event.preventDefault();
   if (!event.target.classList.contains('upload-filter-preview')) {
     return;
   }
-  toogleFilter(event.target);
+  toggleFilter(event.target);
 }
-function activateEvent(evt) {
+
+function enterEvent(evt) {
   return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
 }
 
