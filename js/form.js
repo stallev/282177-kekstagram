@@ -1,12 +1,9 @@
 'use strict';
 var uploadOverlay = document.querySelector('.upload-overlay');
-
 var uploadSelectImage = document.getElementById('upload-select-image');
-
 var uploadFile = document.querySelector('.upload-file');
-
 // closing image button
-var uploadFormCancel = document.querySelector('.upload-form-cancel');
+var buttonUploadFormClose = document.querySelector('.upload-form-cancel');
 
 var mainImage = document.querySelector('.upload-form-preview > img');
 
@@ -14,10 +11,8 @@ var uploadForm = uploadOverlay.querySelector('form');
 
 var clickableRadioArea = document.querySelectorAll('.upload-filter-preview');
 
-// getting array of the filter input
-var controls = uploadForm.elements['upload-filter'];
+var changeFilterButtonGroup = uploadForm.elements['upload-filter'];
 
-// controls fieldset, for common addEventListener
 var controlsWrapper = document.querySelector('.upload-filter-controls');
 var zoomButton = document.querySelector('.upload-resize-controls-button-inc');
 var decreaseButton = document.querySelector('.upload-resize-controls-button-dec');
@@ -34,25 +29,27 @@ var ESC_KEY_CODE = 27;
 
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
-uploadFile.addEventListener('click', onClickUploadImageOpening);
-uploadFile.addEventListener('keydown', onEnterUploadImageOpening);
-uploadFormCancel.addEventListener('click', onClickUploadImageClosing);
-document.addEventListener('keydown', onEscapeUploadImageClosing);
+uploadFile.addEventListener('click', onClickImageOpening);
+uploadFile.addEventListener('keydown', onEnterImageOpening);
+buttonUploadFormClose.addEventListener('click', onClickUploadImageClosing);
+document.addEventListener('keydown', onEscapeImageClosing);
 controlsWrapper.addEventListener('click', onClickChangeImageFilter);
 controlsWrapper.addEventListener('keydown', onEnterChangeImageFilter);
+decreaseButton.addEventListener('click', decreaseImage);
+zoomButton.addEventListener('click', increaseImage);
 
 function toggleFilter(target) {
   deleteFilter();
   // make all attributes area-checked false
   deletingAreaChecked(clickableRadioArea);
-  togglingAria(target);
+  togglegAriaChecked(target);
   mainImage.classList.add('filter-' + target.parentNode.previousElementSibling.value);
   changeInputChecked(target);
 }
 
 function deleteFilter() {
-  for (var i = 0; i < controls.length; i++) {
-    mainImage.classList.remove('filter-' + controls[i].value);
+  for (var i = 0; i < changeFilterButtonGroup.length; i++) {
+    mainImage.classList.remove('filter-' + changeFilterButtonGroup[i].value);
   }
 }
 
@@ -63,9 +60,9 @@ function deletingAreaChecked(array) {
 }
 
 // toggling aria-checked
-function togglingAria(ariaCheckedTrueControl) {
-  var pressed = (ariaCheckedTrueControl.getAttribute('aria-checked') === 'true');
-  ariaCheckedTrueControl.setAttribute('aria-checked', !pressed);
+function togglegAriaChecked(element) {
+  var pressed = (element.getAttribute('aria-checked') === 'true');
+  element.setAttribute('aria-checked', !pressed);
 }
 
 function changeInputChecked() {
@@ -77,19 +74,19 @@ function changeInputChecked() {
   }
 }
 
-decreaseButton.addEventListener('click', function () {
-  if (imageSizeValue > minImageSize) {
-    imageSizeValue -= imageSizeStep;
-    resizeMainPicture(imageSizeValue / 100);
-  }
-});
-
-zoomButton.addEventListener('click', function () {
+function increaseImage() {
   if (imageSizeValue < maxImageSize) {
     imageSizeValue += imageSizeStep;
     resizeMainPicture(imageSizeValue / 100);
   }
-});
+}
+
+function decreaseImage() {
+  if (imageSizeValue > minImageSize) {
+    imageSizeValue -= imageSizeStep;
+    resizeMainPicture(imageSizeValue / 100);
+  }
+}
 
 function resizeMainPicture(size) {
   mainImage.style.transform = 'scale(' + size + ')';
@@ -97,13 +94,13 @@ function resizeMainPicture(size) {
   imageSizeField.value = size * 100 + '%';
 }
 
-function onClickUploadImageOpening() {
+function onClickImageOpening() {
   event.preventDefault();
   uploadImageOpening();
 }
 
-function onEnterUploadImageOpening(event) {
-  if (enterEvent(event)) {
+function onEnterImageOpening(event) {
+  if (isEnterEvent(event)) {
     event.preventDefault();
     uploadImageOpening();
   }
@@ -126,8 +123,8 @@ function onClickUploadImageClosing() {
   resizeMainPicture(1);
 }
 
-function onEscapeUploadImageClosing(event) {
-  if (escapeEvent(event)) {
+function onEscapeImageClosing(event) {
+  if (isEscapeEvent(event)) {
     uploadImageClosing();
     // deleting unnessesary styles
     deleteFilter();
@@ -136,7 +133,7 @@ function onEscapeUploadImageClosing(event) {
 }
 
 function onEnterChangeImageFilter(event) {
-  if (enterEvent(event)) {
+  if (isEnterEvent(event)) {
     toggleFilter(event.target);
   }
 }
@@ -149,10 +146,10 @@ function onClickChangeImageFilter(event) {
   toggleFilter(event.target);
 }
 
-function enterEvent(evt) {
+function isEnterEvent(evt) {
   return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
 }
 
-function escapeEvent(evt) {
+function isEscapeEvent(evt) {
   return (evt.keyCode && evt.keyCode === ESC_KEY_CODE);
 }
