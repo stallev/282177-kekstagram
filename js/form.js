@@ -1,97 +1,155 @@
 'use strict';
 var uploadOverlay = document.querySelector('.upload-overlay');
-
-// upload image window
 var uploadSelectImage = document.getElementById('upload-select-image');
-
-// upload file field
 var uploadFile = document.querySelector('.upload-file');
 
-// closing image button
-var uploadFormCancel = document.querySelector('.upload-form-cancel');
+var buttonCloseModal = document.querySelector('.upload-form-cancel');
 
-// main image
-var mainImage = document.querySelector('.upload-form-preview > img');
+var image = document.querySelector('.upload-form-preview > img');
+
 var uploadForm = uploadOverlay.querySelector('form');
 
-// getting array of the filter input
-var controls = uploadForm.elements['upload-filter'];
+var filters = document.querySelectorAll('.upload-filter-preview');
 
-// zoom button
-var zoomButton = document.querySelector('.upload-resize-controls-button-inc');
+var filterButtons = uploadForm.elements['upload-filter'];
 
-// decrease button
-var decreaseButton = document.querySelector('.upload-resize-controls-button-dec');
+var filterLabels = document.querySelector('.upload-filter-controls');
+var increasingScaleButton = document.querySelector('.upload-resize-controls-button-inc');
+var decreasingScaleButton = document.querySelector('.upload-resize-controls-button-dec');
+var imageSize = document.querySelector('.upload-resize-controls-value');
 
-// image size field
-var imageSizeField = document.querySelector('.upload-resize-controls-value');
-
-// default value
+// default values
 var imageSizeValue = 100;
 var imageSizeStep = 25;
 var minImageSize = 25;
 var maxImageSize = 100;
 
+var ENTER_KEY_CODE = 13;
+var ESC_KEY_CODE = 27;
+
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
+uploadFile.addEventListener('click', onOpen);
+uploadFile.addEventListener('keydown', onOpenByEnter);
+buttonCloseModal.addEventListener('click', onClose);
+document.addEventListener('keydown', onCloseByEscape);
+filterLabels.addEventListener('click', onSelectFilter);
+filterLabels.addEventListener('keydown', onSelectFilterByEnter);
+decreasingScaleButton.addEventListener('click', decreaseScale);
+increasingScaleButton.addEventListener('click', increaseScale);
 
-// changing the value of the upload file field
-uploadFile.addEventListener('click', function () {
-  event.preventDefault();
-  uploadOverlay.classList.remove('invisible');
-  uploadSelectImage.classList.add('invisible');
-});
-
-// closing image button event
-uploadFormCancel.addEventListener('click', function () {
-  uploadOverlay.classList.add('invisible');
-  uploadSelectImage.classList.remove('invisible');
-  // deleting unnessesary styles
+function toggleFilter(target) {
   deleteFilter();
-  resizeMainPicture(1);
-});
-
-// changing filters for the image
-for (var i = 0; i < controls.length; i++) {
-  checkControl(controls[i]);
-}
-
-// creating event listener for radio
-function checkControl(control) {
-  control.addEventListener('click', function () {
-    toogleFilter(control);
-  });
-}
-
-function toogleFilter(control) {
-  deleteFilter();
-  mainImage.classList.add('filter-' + control.value);
+  // make all attributes area-checked false
+  deleteAreaChecked(filters);
+  toggleAriaChecked(target);
+  image.classList.add('filter-' + target.parentNode.previousElementSibling.value);
+  changeInputChecked(target);
 }
 
 function deleteFilter() {
-  for (i = 0; i < controls.length; i++) {
-    mainImage.classList.remove('filter-' + controls[i].value);
+  for (var i = 0; i < filterButtons.length; i++) {
+    image.classList.remove('filter-' + filterButtons[i].value);
   }
 }
 
-// decreasing image
-decreaseButton.addEventListener('click', function () {
-  if (imageSizeValue > minImageSize) {
-    imageSizeValue -= imageSizeStep;
-    resizeMainPicture(imageSizeValue / 100);
+function deleteAreaChecked(array) {
+  for (var i = 0; i < array.length; i++) {
+    array[i].setAttribute('aria-checked', 'false');
   }
-});
+}
 
-// zooming image
-zoomButton.addEventListener('click', function () {
+function toggleAriaChecked(element) {
+  var pressed = (element.getAttribute('aria-checked') === 'true');
+  element.setAttribute('aria-checked', !pressed);
+}
+
+function changeInputChecked(target) {
+  for (var i = 0; i < filters.length; i++) {
+    var targetRadioInput = filters[i].parentNode.previousElementSibling;
+    if (targetRadioInput.hasAttribute('checked')) {
+      targetRadioInput.removeAttribute('checked');
+    }
+  }
+  target.parentNode.previousElementSibling.setAttribute('checked', 'true');
+}
+
+function increaseScale() {
   if (imageSizeValue < maxImageSize) {
     imageSizeValue += imageSizeStep;
-    resizeMainPicture(imageSizeValue / 100);
+    resizeImage(imageSizeValue / 100);
   }
-});
+}
 
-function resizeMainPicture(size) {
-  mainImage.style.transform = 'scale(' + size + ')';
-  mainImage.style.webkitTransform = 'scale(' + size + ')';
-  imageSizeField.value = size * 100 + '%';
+function decreaseScale() {
+  if (imageSizeValue > minImageSize) {
+    imageSizeValue -= imageSizeStep;
+    resizeImage(imageSizeValue / 100);
+  }
+}
+
+function resizeImage(size) {
+  image.style.transform = 'scale(' + size + ')';
+  image.style.webkitTransform = 'scale(' + size + ')';
+  imageSize.value = size * 100 + '%';
+}
+
+function onOpen() {
+  event.preventDefault();
+  open();
+}
+
+function onOpenByEnter(event) {
+  if (isEnterKey(event)) {
+    event.preventDefault();
+    open();
+  }
+}
+
+function open() {
+  uploadOverlay.classList.remove('invisible');
+  uploadSelectImage.classList.add('invisible');
+}
+
+function close() {
+  uploadOverlay.classList.add('invisible');
+  uploadSelectImage.classList.remove('invisible');
+}
+
+function onClose() {
+  close();
+  // deleting unnessesary styles
+  deleteFilter();
+  resizeImage(1);
+}
+
+function onCloseByEscape(event) {
+  if (isEscapeKey(event)) {
+    close();
+    // deleting unnessesary styles
+    deleteFilter();
+    resizeImage(1);
+  }
+}
+
+function onSelectFilterByEnter(event) {
+  if (isEnterKey(event)) {
+    toggleFilter(event.target);
+  }
+}
+
+function onSelectFilter(event) {
+  event.preventDefault();
+  if (!event.target.classList.contains('upload-filter-preview')) {
+    return;
+  }
+  toggleFilter(event.target);
+}
+
+function isEnterKey(evt) {
+  return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
+}
+
+function isEscapeKey(evt) {
+  return (evt.keyCode && evt.keyCode === ESC_KEY_CODE);
 }
