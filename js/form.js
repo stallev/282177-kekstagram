@@ -29,8 +29,8 @@ var ESC_KEY_CODE = 27;
 
 uploadOverlay.classList.add('invisible');
 uploadSelectImage.classList.remove('invisible');
-uploadFile.addEventListener('click', onImageOpen);
-uploadFile.addEventListener('keydown', onImageOpenByEnter);
+uploadFile.addEventListener('click', onOpen);
+uploadFile.addEventListener('keydown', onOpenByEnter);
 buttonCloseModal.addEventListener('click', onClose);
 document.addEventListener('keydown', onCloseByEscape);
 filterLabels.addEventListener('click', onSelectFilter);
@@ -93,30 +93,30 @@ function resizeImage(size) {
   imageSize.value = size * 100 + '%';
 }
 
-function onImageOpen() {
+function onOpen() {
   event.preventDefault();
-  uploadImageOpening();
+  open();
 }
 
-function onImageOpenByEnter(event) {
+function onOpenByEnter(event) {
   if (isEnterKey(event)) {
     event.preventDefault();
-    uploadImageOpening();
+    open();
   }
 }
 
-function uploadImageOpening() {
+function open() {
   uploadOverlay.classList.remove('invisible');
   uploadSelectImage.classList.add('invisible');
 }
 
-function closeUploadImage() {
+function close() {
   uploadOverlay.classList.add('invisible');
   uploadSelectImage.classList.remove('invisible');
 }
 
 function onClose() {
-  closeUploadImage();
+  close();
   // deleting unnessesary styles
   deleteFilter();
   resizeImage(1);
@@ -124,7 +124,7 @@ function onClose() {
 
 function onCloseByEscape(event) {
   if (isEscapeKey(event)) {
-    closeUploadImage();
+    close();
     // deleting unnessesary styles
     deleteFilter();
     resizeImage(1);
