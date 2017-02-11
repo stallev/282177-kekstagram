@@ -70,8 +70,8 @@ function changeInputChecked(target) {
     if (targetRadioInput.hasAttribute('checked')) {
       targetRadioInput.removeAttribute('checked');
     }
-    target.parentNode.previousElementSibling.setAttribute('checked', 'true');
   }
+  target.parentNode.previousElementSibling.setAttribute('checked', 'true');
 }
 
 function increaseScale() {
