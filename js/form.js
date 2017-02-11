@@ -64,12 +64,13 @@ function toggleAriaChecked(element) {
   element.setAttribute('aria-checked', !pressed);
 }
 
-function changeInputChecked() {
+function changeInputChecked(target) {
   for (var i = 0; i < filters.length; i++) {
     var targetRadioInput = filters[i].parentNode.previousElementSibling;
     if (targetRadioInput.hasAttribute('checked')) {
       targetRadioInput.removeAttribute('checked');
     }
+    target.parentNode.previousElementSibling.setAttribute('checked', 'checked');
   }
 }
 
