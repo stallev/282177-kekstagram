@@ -22,7 +22,7 @@
 <div class="upload">
   <form class="upload-form upload-image invisible" id="upload-select-image" method="post" enctype="multipart/form-data">
     <input type="file" id="upload-file" class="upload-input" name="filename" required >
-    <label class="upload-file upload-control" for="upload-file"></label>
+    <label class="upload-file upload-control" for="upload-file" role="button" tabindex="1"></label>
     <button class="upload-submit upload-control" type="submit"></button>
   </form>
 
@@ -39,7 +39,7 @@
         <img src="img/upload-default-image.png" class="filter-image-preview ">
       </div>
 
-      <fieldset class="upload-filter-controls">
+      <fieldset class="upload-filter-controls" role="radiogroup">
         <div class="upload-filter-level">
           <div class="upload-filter-level-line">
             <div class="upload-filter-level-pin"></div>
@@ -49,37 +49,37 @@
 
         <input type="radio" name="upload-filter" id="upload-filter-none" value="none" checked>
         <label class="upload-filter-label" for="upload-filter-none">
-          <div class="upload-filter-preview"></div>
+          <div class="upload-filter-preview" role="radio" aria-checked="true" tabindex="0"></div>
           Оригинал
         </label>
 
         <input type="radio" name="upload-filter" id="upload-filter-chrome" value="chrome">
         <label class="upload-filter-label upload-filter-label-chrome" for="upload-filter-chrome">
-          <div class="upload-filter-preview"></div>
+          <div class="upload-filter-preview" role="radio" aria-checked="false" tabindex="0"></div>
           Хром
         </label>
 
         <input type="radio" name="upload-filter" id="upload-filter-sepia" value="sepia">
         <label class="upload-filter-label upload-filter-label-sepia" for="upload-filter-sepia">
-          <div class="upload-filter-preview"></div>
+          <div class="upload-filter-preview" role="radio" aria-checked="false" tabindex="0"></div>
           Сепия
         </label>
 
         <input type="radio" name="upload-filter" id="upload-filter-marvin" value="marvin">
         <label class="upload-filter-label upload-filter-label-marvin" for="upload-filter-marvin">
-          <div class="upload-filter-preview"></div>
+          <div class="upload-filter-preview" role="radio" aria-checked="false" tabindex="0"></div>
           Марвин
         </label>
 
         <input type="radio" name="upload-filter" id="upload-filter-phobos" value="phobos">
         <label class="upload-filter-label upload-filter-label-phobos" for="upload-filter-phobos">
-          <div class="upload-filter-preview"></div>
+          <div class="upload-filter-preview" role="radio" aria-checked="false" tabindex="0"></div>
           Фобос
         </label>
 
         <input type="radio" name="upload-filter" id="upload-filter-heat" value="heat">
         <label class="upload-filter-label upload-filter-label-heat" for="upload-filter-heat">
-          <div class="upload-filter-preview"></div>
+          <div class="upload-filter-preview" role="radio" aria-checked="false" tabindex="0"></div>
           Зной
         </label>
       </fieldset>
