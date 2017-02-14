@@ -7,22 +7,15 @@ var buttonCloseModal = document.querySelector('.upload-form-cancel');
 
 var image = document.querySelector('.upload-form-preview > img');
 
-var uploadForm = uploadOverlay.querySelector('form');
-
-var filters = document.querySelectorAll('.upload-filter-preview');
-
-var filterButtons = uploadForm.elements['upload-filter'];
-
-var filterLabels = document.querySelector('.upload-filter-controls');
-var increasingScaleButton = document.querySelector('.upload-resize-controls-button-inc');
-var decreasingScaleButton = document.querySelector('.upload-resize-controls-button-dec');
+var scaleControls = document.querySelector('.upload-resize-controls');
 var imageSize = document.querySelector('.upload-resize-controls-value');
+var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
+var filters = document.querySelectorAll('.upload-filter-preview');
+var originalFilter = filters[0];
 
 // default values
 var imageSizeValue = 100;
 var imageSizeStep = 25;
-var minImageSize = 25;
-var maxImageSize = 100;
 
 var ENTER_KEY_CODE = 13;
 var ESC_KEY_CODE = 27;
@@ -34,14 +27,8 @@ uploadFile.addEventListener('keydown', onOpenByEnter);
 buttonCloseModal.addEventListener('click', onClose);
 document.addEventListener('keydown', onCloseByEscape);
 
-window.initializeFilters(image, filterLabels, filterButtons, filters, isEnterKey);
-window.initializeScale(image, decreasingScaleButton, increasingScaleButton, imageSizeValue, maxImageSize, minImageSize, imageSizeStep, imageSize);
-
-function deleteFilter() {
-  for (var i = 0; i < filterButtons.length; i++) {
-    image.classList.remove('filter-' + filterButtons[i].value);
-  }
-}
+window.initializeFilters();
+window.initializeScale(scaleControls, imageSizeStep, imageSizeValue);
 
 function resizeImage(size) {
   image.style.transform = 'scale(' + size + ')';
@@ -69,6 +56,23 @@ function open() {
 function close() {
   uploadOverlay.classList.add('invisible');
   uploadSelectImage.classList.remove('invisible');
+  changeInputChecked(originalFilter);
+}
+
+function changeInputChecked(target) {
+  for (var i = 0; i < filters.length; i++) {
+    var targetRadioInput = filters[i].parentNode.previousElementSibling;
+    if (targetRadioInput.hasAttribute('checked')) {
+      targetRadioInput.removeAttribute('checked');
+    }
+  }
+  target.parentNode.previousElementSibling.setAttribute('checked', 'true');
+}
+
+function deleteFilter() {
+  for (var i = 0; i < filterButtons.length; i++) {
+    image.classList.remove('filter-' + filterButtons[i].value);
+  }
 }
 
 function onClose() {

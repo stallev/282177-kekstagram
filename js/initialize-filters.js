@@ -1,22 +1,17 @@
 'use strict';
-window.initializeFilters = function (image, controlsWrapper, filtersInput, filters, onKey) {
-  controlsWrapper.addEventListener('click', onSelectFilter);
-  controlsWrapper.addEventListener('keydown', onSelectFilterByEnter);
 
-  function onSelectFilterByEnter(event) {
-    if (onKey(event)) {
-      toggleFilter(event.target);
-    }
-  }
+window.initializeFilters = function () {
 
-  function onSelectFilter(event) {
-    event.preventDefault();
-    if (!event.target.classList.contains('upload-filter-preview')) {
-      return;
-    }
-    toggleFilter(event.target);
-  }
+  var filters = document.querySelectorAll('.upload-filter-preview');
 
+  var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
+
+  var filterLabels = document.querySelector('.upload-filter-controls');
+  var image = document.querySelector('.upload-form-preview > img');
+  var ENTER_KEY_CODE = 13;
+
+  filterLabels.addEventListener('click', onSelectFilter);
+  filterLabels.addEventListener('keydown', onSelectFilterByEnter);
   function toggleFilter(target) {
     deleteFilter();
     // make all attributes area-checked false
@@ -27,8 +22,8 @@ window.initializeFilters = function (image, controlsWrapper, filtersInput, filte
   }
 
   function deleteFilter() {
-    for (var i = 0; i < filtersInput.length; i++) {
-      image.classList.remove('filter-' + filtersInput[i].value);
+    for (var i = 0; i < filterButtons.length; i++) {
+      image.classList.remove('filter-' + filterButtons[i].value);
     }
   }
 
@@ -52,4 +47,22 @@ window.initializeFilters = function (image, controlsWrapper, filtersInput, filte
     }
     target.parentNode.previousElementSibling.setAttribute('checked', 'true');
   }
+  function onSelectFilterByEnter(event) {
+    if (isEnterKey(event)) {
+      toggleFilter(event.target);
+    }
+  }
+
+  function onSelectFilter(event) {
+    event.preventDefault();
+    if (!event.target.classList.contains('upload-filter-preview')) {
+      return;
+    }
+    toggleFilter(event.target);
+  }
+
+  function isEnterKey(evt) {
+    return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
+  }
 };
+

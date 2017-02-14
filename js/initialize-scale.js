@@ -1,20 +1,28 @@
 'use strict';
-window.initializeScale = function (image, minifyImage, maxifyImage, realSize, maxSize, minSize, sizeStep, imageSize) {
 
-  minifyImage.addEventListener('click', decreaseScale);
-  maxifyImage.addEventListener('click', increaseScale);
+window.initializeScale = function (element, step, imageSizeValue) {
+  var imageSize = document.querySelector('.upload-resize-controls-value');
+  var image = document.querySelector('.upload-form-preview > img');
+  var increasingScaleButton = element.querySelector('.upload-resize-controls-button-inc');
+  var decreasingScaleButton = element.querySelector('.upload-resize-controls-button-dec');
+
+  var minImageSize = 25;
+  var maxImageSize = 100;
+
+  decreasingScaleButton.addEventListener('click', decreaseScale);
+  increasingScaleButton.addEventListener('click', increaseScale);
 
   function increaseScale() {
-    if (realSize < maxSize) {
-      realSize += sizeStep;
-      resizeImage(realSize / 100);
+    if (imageSizeValue < maxImageSize) {
+      imageSizeValue += step;
+      resizeImage(imageSizeValue / 100);
     }
   }
 
   function decreaseScale() {
-    if (realSize > minSize) {
-      realSize -= sizeStep;
-      resizeImage(realSize / 100);
+    if (imageSizeValue > minImageSize) {
+      imageSizeValue -= step;
+      resizeImage(imageSizeValue / 100);
     }
   }
 
