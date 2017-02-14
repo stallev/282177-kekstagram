@@ -35,7 +35,7 @@ buttonCloseModal.addEventListener('click', onClose);
 document.addEventListener('keydown', onCloseByEscape);
 
 window.initializeFilters(image, filterLabels, filterButtons, filters, isEnterKey);
-window.initializeScale(image, decreasingScaleButton, increasingScaleButton, imageSizeValue, maxImageSize, minImageSize, imageSizeStep, imageSize, filterButtons);
+window.initializeScale(image, decreasingScaleButton, increasingScaleButton, imageSizeValue, maxImageSize, minImageSize, imageSizeStep, imageSize);
 
 function deleteFilter() {
   for (var i = 0; i < filterButtons.length; i++) {

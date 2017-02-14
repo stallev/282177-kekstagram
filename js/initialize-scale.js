@@ -1,14 +1,8 @@
 'use strict';
-window.initializeScale = function(image, minifyImage, maxifyImage, realSize, maxSize, minSize, sizeStep, imageSize, filtersInput) {
+window.initializeScale = function (image, minifyImage, maxifyImage, realSize, maxSize, minSize, sizeStep, imageSize) {
 
   minifyImage.addEventListener('click', decreaseScale);
   maxifyImage.addEventListener('click', increaseScale);
-
-  function deleteFilter() {
-    for (var i = 0; i < filtersInput.length; i++) {
-      image.classList.remove('filter-' + filtersInput[i].value);
-    }
-  }
 
   function increaseScale() {
     if (realSize < maxSize) {
