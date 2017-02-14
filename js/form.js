@@ -33,28 +33,13 @@ uploadFile.addEventListener('click', onOpen);
 uploadFile.addEventListener('keydown', onOpenByEnter);
 buttonCloseModal.addEventListener('click', onClose);
 document.addEventListener('keydown', onCloseByEscape);
-decreasingScaleButton.addEventListener('click', decreaseScale);
-increasingScaleButton.addEventListener('click', increaseScale);
 
 window.initializeFilters(image, filterLabels, filterButtons, filters, isEnterKey);
+window.initializeScale(image, decreasingScaleButton, increasingScaleButton, imageSizeValue, maxImageSize, minImageSize, imageSizeStep, imageSize, filterButtons);
 
 function deleteFilter() {
   for (var i = 0; i < filterButtons.length; i++) {
     image.classList.remove('filter-' + filterButtons[i].value);
-  }
-}
-
-function increaseScale() {
-  if (imageSizeValue < maxImageSize) {
-    imageSizeValue += imageSizeStep;
-    resizeImage(imageSizeValue / 100);
-  }
-}
-
-function decreaseScale() {
-  if (imageSizeValue > minImageSize) {
-    imageSizeValue -= imageSizeStep;
-    resizeImage(imageSizeValue / 100);
   }
 }
 
