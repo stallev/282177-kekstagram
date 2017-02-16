@@ -22,7 +22,8 @@ uploadFile.addEventListener('keydown', onOpenByEnter);
 buttonCloseModal.addEventListener('click', onClose);
 document.addEventListener('keydown', onCloseByEscape);
 
-window.initializeScale(scaleControls, imageSizeStep, imageSizeValue);
+window.initializeScale.scale(scaleControls, imageSizeStep, imageSizeValue);
+window.test(7);
 
 function onOpen() {
   event.preventDefault();
