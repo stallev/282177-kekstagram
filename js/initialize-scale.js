@@ -26,9 +26,12 @@ window.initializeScale = function (element, step, imageSizeValue) {
     }
   }
 
-  function resizeImage(size) {
+  var resizeImage = function resizeImage(size) {
     image.style.transform = 'scale(' + size + ')';
     image.style.webkitTransform = 'scale(' + size + ')';
     imageSize.value = size * 100 + '%';
-  }
+  };
+  return {
+    resizeImage: resizeImage
+  };
 };

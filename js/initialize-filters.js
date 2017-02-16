@@ -1,6 +1,6 @@
 'use strict';
 
-window.initializeFilters = function () {
+window.initializeFilters = (function () {
 
   var filters = document.querySelectorAll('.upload-filter-preview');
 
@@ -21,11 +21,11 @@ window.initializeFilters = function () {
     changeInputChecked(target);
   }
 
-  function deleteFilter() {
+  var deleteFilter = function deleteFilter() {
     for (var i = 0; i < filterButtons.length; i++) {
       image.classList.remove('filter-' + filterButtons[i].value);
     }
-  }
+  };
 
   function deleteAreaChecked(array) {
     for (var i = 0; i < array.length; i++) {
@@ -38,7 +38,7 @@ window.initializeFilters = function () {
     element.setAttribute('aria-checked', !pressed);
   }
 
-  function changeInputChecked(target) {
+  var changeInputChecked = function changeInputChecked(target) {
     for (var i = 0; i < filters.length; i++) {
       var targetRadioInput = filters[i].parentNode.previousElementSibling;
       if (targetRadioInput.hasAttribute('checked')) {
@@ -46,7 +46,7 @@ window.initializeFilters = function () {
       }
     }
     target.parentNode.previousElementSibling.setAttribute('checked', 'true');
-  }
+  };
   function onSelectFilterByEnter(event) {
     if (isEnterKey(event)) {
       toggleFilter(event.target);
@@ -61,8 +61,14 @@ window.initializeFilters = function () {
     toggleFilter(event.target);
   }
 
-  function isEnterKey(evt) {
+  var isEnterKey = function isEnterKey(evt) {
     return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
-  }
-};
+  };
+
+  return {
+    isEnterKey: isEnterKey,
+    deleteFilter: deleteFilter,
+    changeInputChecked: changeInputChecked
+  };
+})();
 
