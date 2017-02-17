@@ -19,6 +19,7 @@
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
+  window.initializeFilters();
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue);
 
   function onOpen(event) {
