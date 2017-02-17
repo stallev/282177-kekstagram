@@ -3,9 +3,7 @@
 window.initializeFilters = (function () {
 
   var filters = document.querySelectorAll('.upload-filter-preview');
-
   var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
-
   var filterLabels = document.querySelector('.upload-filter-controls');
   var image = document.querySelector('.upload-form-preview > img');
   var ENTER_KEY_CODE = 13;
@@ -38,7 +36,7 @@ window.initializeFilters = (function () {
     element.setAttribute('aria-checked', !pressed);
   }
 
-  var changeInputChecked = function changeInputChecked(target) {
+  function changeInputChecked(target) {
     for (var i = 0; i < filters.length; i++) {
       var targetRadioInput = filters[i].parentNode.previousElementSibling;
       if (targetRadioInput.hasAttribute('checked')) {
@@ -46,7 +44,8 @@ window.initializeFilters = (function () {
       }
     }
     target.parentNode.previousElementSibling.setAttribute('checked', 'true');
-  };
+  }
+
   function onSelectFilterByEnter(event) {
     if (isEnterKey(event)) {
       toggleFilter(event.target);
@@ -61,14 +60,8 @@ window.initializeFilters = (function () {
     toggleFilter(event.target);
   }
 
-  var isEnterKey = function isEnterKey(evt) {
+  function isEnterKey(evt) {
     return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
-  };
-
-  return {
-    isEnterKey: isEnterKey,
-    deleteFilter: deleteFilter,
-    changeInputChecked: changeInputChecked
-  };
+  }
 })();
 

@@ -1,7 +1,7 @@
 'use strict';
 
 window.initializeScale = (function () {
-  var scale = function (element, step, imageSizeValue) {
+  return function (element, step, imageSizeValue) {
     var imageSize = document.querySelector('.upload-resize-controls-value');
     var image = document.querySelector('.upload-form-preview > img');
     var increasingScaleButton = element.querySelector('.upload-resize-controls-button-inc');
@@ -27,18 +27,10 @@ window.initializeScale = (function () {
       }
     }
 
-    var resizeImage = function resizeImage(size) {
+    function resizeImage(size) {
       image.style.transform = 'scale(' + size + ')';
       image.style.webkitTransform = 'scale(' + size + ')';
       imageSize.value = size * 100 + '%';
-    };
-  };
-  return {
-    scale: scale
-  };
-})();
-window.test = (function () {
-  return function (number) {
-    console.log(number * 2);
+    }
   };
 })();
