@@ -10,6 +10,7 @@ window.initializeFilters = (function () {
 
     filterLabels.addEventListener('click', onSelectFilter);
     filterLabels.addEventListener('keydown', onSelectFilterByEnter);
+
     function toggleFilter(target) {
       deleteFilter();
       // make all attributes area-checked false
@@ -19,11 +20,11 @@ window.initializeFilters = (function () {
       changeInputChecked(target);
     }
 
-    var deleteFilter = function deleteFilter() {
+    function deleteFilter() {
       for (var i = 0; i < filterButtons.length; i++) {
         image.classList.remove('filter-' + filterButtons[i].value);
       }
-    };
+    }
 
     function deleteAreaChecked(array) {
       for (var i = 0; i < array.length; i++) {
