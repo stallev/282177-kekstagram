@@ -5,7 +5,7 @@
   var uploadFile = document.querySelector('.upload-file');
   var buttonCloseModal = document.querySelector('.upload-form-cancel');
   var scaleControls = document.querySelector('.upload-resize-controls');
-  // default values
+
   var imageSizeValue = 100;
   var imageSizeStep = 25;
 
