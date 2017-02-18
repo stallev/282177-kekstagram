@@ -29,6 +29,20 @@
   window.initializeFilters(filterLabels);
   window.initializeScale(scaleControls);
 
+  window.onSelectFilterByEnter(function (event) {
+    if (isEnterKey(event)) {
+      toggleFilter(event.target);
+    }
+  });
+
+  window.onSelectFilter(function (event) {
+    event.preventDefault();
+    if (!event.target.classList.contains('upload-filter-preview')) {
+      return;
+    }
+    toggleFilter(event.target);
+  });
+
   window.decreasingScale(function () {
     if (imageSizeValue > minImageSize) {
       imageSizeValue -= imageSizeStep;
@@ -117,20 +131,6 @@
     }
     target.parentNode.previousElementSibling.setAttribute('checked', 'true');
   }
-
-  window.onSelectFilterByEnter(function (event) {
-    if (isEnterKey(event)) {
-      toggleFilter(event.target);
-    }
-  });
-
-  window.onSelectFilter(function (event) {
-    event.preventDefault();
-    if (!event.target.classList.contains('upload-filter-preview')) {
-      return;
-    }
-    toggleFilter(event.target);
-  });
 
   function isEnterKey(evt) {
     return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
