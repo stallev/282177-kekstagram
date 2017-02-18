@@ -4,10 +4,14 @@
   var uploadSelectImage = document.getElementById('upload-select-image');
   var uploadFile = document.querySelector('.upload-file');
   var buttonCloseModal = document.querySelector('.upload-form-cancel');
+  var image = document.querySelector('.upload-form-preview > img');
+  var imageSize = document.querySelector('.upload-resize-controls-value');
   var scaleControls = document.querySelector('.upload-resize-controls');
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
+  var minImageSize = 25;
+  var maxImageSize = 100;
 
   var ESC_KEY_CODE = 27;
   var ENTER_KEY_CODE = 13;
@@ -20,7 +24,21 @@
   document.addEventListener('keydown', onCloseByEscape);
 
   window.initializeFilters();
-  window.initializeScale(scaleControls, imageSizeStep, imageSizeValue);
+  window.initializeScale(scaleControls);
+
+  window.decreasingScale(function() {
+    if (imageSizeValue > minImageSize) {
+      imageSizeValue -= imageSizeStep;
+      resizeImage(imageSizeValue / 100);
+    }
+  });
+
+  window.increasingScale(function() {
+    if (imageSizeValue < maxImageSize) {
+      imageSizeValue += imageSizeStep;
+      resizeImage(imageSizeValue / 100);
+    }
+  });
 
   function onOpen(event) {
     event.preventDefault();
@@ -53,5 +71,10 @@
     if (event.keyCode && event.keyCode === ESC_KEY_CODE) {
       close();
     }
+  }
+  function resizeImage(size) {
+    image.style.transform = 'scale(' + size + ')';
+    image.style.webkitTransform = 'scale(' + size + ')';
+    imageSize.value = size * 100 + '%';
   }
 })();
