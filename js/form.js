@@ -7,6 +7,9 @@
   var image = document.querySelector('.upload-form-preview > img');
   var imageSize = document.querySelector('.upload-resize-controls-value');
   var scaleControls = document.querySelector('.upload-resize-controls');
+  var filterLabels = document.querySelector('.upload-filter-controls');
+  var filters = document.querySelectorAll('.upload-filter-preview');
+  var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
@@ -23,17 +26,17 @@
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
-  window.initializeFilters();
+  window.initializeFilters(filterLabels);
   window.initializeScale(scaleControls);
 
-  window.decreasingScale(function() {
+  window.decreasingScale(function () {
     if (imageSizeValue > minImageSize) {
       imageSizeValue -= imageSizeStep;
       resizeImage(imageSizeValue / 100);
     }
   });
 
-  window.increasingScale(function() {
+  window.increasingScale(function () {
     if (imageSizeValue < maxImageSize) {
       imageSizeValue += imageSizeStep;
       resizeImage(imageSizeValue / 100);
@@ -76,5 +79,60 @@
     image.style.transform = 'scale(' + size + ')';
     image.style.webkitTransform = 'scale(' + size + ')';
     imageSize.value = size * 100 + '%';
+  }
+
+
+  function toggleFilter(target) {
+    deleteFilter();
+    // make all attributes area-checked false
+    deleteAreaChecked(filters);
+    toggleAriaChecked(target);
+    image.classList.add('filter-' + target.parentNode.previousElementSibling.value);
+    changeInputChecked(target);
+  }
+
+  function deleteFilter() {
+    for (var i = 0; i < filterButtons.length; i++) {
+      image.classList.remove('filter-' + filterButtons[i].value);
+    }
+  }
+
+  function deleteAreaChecked(array) {
+    for (var i = 0; i < array.length; i++) {
+      array[i].setAttribute('aria-checked', 'false');
+    }
+  }
+
+  function toggleAriaChecked(element) {
+    var pressed = (element.getAttribute('aria-checked') === 'true');
+    element.setAttribute('aria-checked', !pressed);
+  }
+
+  function changeInputChecked(target) {
+    for (var i = 0; i < filters.length; i++) {
+      var targetRadioInput = filters[i].parentNode.previousElementSibling;
+      if (targetRadioInput.hasAttribute('checked')) {
+        targetRadioInput.removeAttribute('checked');
+      }
+    }
+    target.parentNode.previousElementSibling.setAttribute('checked', 'true');
+  }
+
+  window.onSelectFilterByEnter(function (event) {
+    if (isEnterKey(event)) {
+      toggleFilter(event.target);
+    }
+  });
+
+  window.onSelectFilter(function (event) {
+    event.preventDefault();
+    if (!event.target.classList.contains('upload-filter-preview')) {
+      return;
+    }
+    toggleFilter(event.target);
+  });
+
+  function isEnterKey(evt) {
+    return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
   }
 })();
