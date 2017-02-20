@@ -16,7 +16,9 @@ window.initializeFilters = (function () {
       // make all attributes area-checked false
       deleteAreaChecked(filters);
       toggleAriaChecked(target);
-      applyFilter(target);
+      if (typeof applyFilter === 'function') {
+        applyFilter(target);
+      }
       changeInputChecked(target);
     }
 

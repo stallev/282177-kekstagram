@@ -15,7 +15,9 @@ window.initializeScale = (function () {
     function increaseScale() {
       if (imageSizeValue < maxImageSize) {
         imageSizeValue += step;
-        resizeImage(imageSizeValue / 100);
+        if (typeof resizeImage === 'function') {
+          resizeImage(imageSizeValue / 100);
+        }
       }
     }
 
