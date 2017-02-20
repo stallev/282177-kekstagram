@@ -62,7 +62,7 @@
     imageSize.value = size * 100 + '%';
   }
 
-  function applyFilter (element) {
+  function applyFilter(element) {
     image.classList.add('filter-' + element.parentNode.previousElementSibling.value);
   }
 })();
