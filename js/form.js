@@ -7,9 +7,6 @@
   var image = document.querySelector('.upload-form-preview > img');
   var imageSize = document.querySelector('.upload-resize-controls-value');
   var scaleControls = document.querySelector('.upload-resize-controls');
-  var filterLabels = document.querySelector('.upload-filter-controls');
-  var filters = document.querySelectorAll('.upload-filter-preview');
-  var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
@@ -26,9 +23,10 @@
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
-  window.initializeFilters(filterLabels);
+  window.initializeFilters();
   window.initializeScale(scaleControls);
 
+<<<<<<< HEAD
   window.onSelectFilterByEnter(function (event) {
     if (isEnterKey(event)) {
       toggleFilter(event.target);
@@ -44,13 +42,16 @@
   });
 
   window.decreasingScale(function () {
+=======
+  window.decreasingScale(function() {
+>>>>>>> parent of 20b304e... half initializeFilters
     if (imageSizeValue > minImageSize) {
       imageSizeValue -= imageSizeStep;
       resizeImage(imageSizeValue / 100);
     }
   });
 
-  window.increasingScale(function () {
+  window.increasingScale(function() {
     if (imageSizeValue < maxImageSize) {
       imageSizeValue += imageSizeStep;
       resizeImage(imageSizeValue / 100);
@@ -94,6 +95,7 @@
     image.style.webkitTransform = 'scale(' + size + ')';
     imageSize.value = size * 100 + '%';
   }
+<<<<<<< HEAD
 
 
   function toggleFilter(target) {
@@ -135,4 +137,6 @@
   function isEnterKey(evt) {
     return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
   }
+=======
+>>>>>>> parent of 20b304e... half initializeFilters
 })();
