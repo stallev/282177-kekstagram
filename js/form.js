@@ -5,9 +5,6 @@
   var uploadFile = document.querySelector('.upload-file');
   var buttonCloseModal = document.querySelector('.upload-form-cancel');
   var scaleControls = document.querySelector('.upload-resize-controls');
-  var filterLabels = document.querySelector('.upload-filter-controls');
-  var filters = document.querySelectorAll('.upload-filter-preview');
-  var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
@@ -22,44 +19,8 @@
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
-<<<<<<< HEAD
   window.initializeFilters();
-<<<<<<< HEAD
-=======
-  window.initializeFilters(filterLabels);
->>>>>>> parent of 3d5dd64... revert filters
-  window.initializeScale(scaleControls);
-
-  window.onSelectFilterByEnter(function (event) {
-    if (isEnterKey(event)) {
-      toggleFilter(event.target);
-    }
-  });
-
-  window.onSelectFilter(function (event) {
-    event.preventDefault();
-    if (!event.target.classList.contains('upload-filter-preview')) {
-      return;
-    }
-    toggleFilter(event.target);
-  });
-
-  window.decreasingScale(function () {
-    if (imageSizeValue > minImageSize) {
-      imageSizeValue -= imageSizeStep;
-      resizeImage(imageSizeValue / 100);
-    }
-  });
-
-  window.increasingScale(function () {
-    if (imageSizeValue < maxImageSize) {
-      imageSizeValue += imageSizeStep;
-      resizeImage(imageSizeValue / 100);
-    }
-  });
-=======
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue);
->>>>>>> parent of c37bd83... half initializeScale
 
   function onOpen(event) {
     event.preventDefault();
@@ -93,58 +54,4 @@
       close();
     }
   }
-<<<<<<< HEAD
-  function resizeImage(size) {
-    image.style.transform = 'scale(' + size + ')';
-    image.style.webkitTransform = 'scale(' + size + ')';
-    imageSize.value = size * 100 + '%';
-  }
-
-
-  function toggleFilter(target) {
-    deleteFilter();
-    // make all attributes area-checked false
-    deleteAreaChecked(filters);
-    toggleAriaChecked(target);
-    image.classList.add('filter-' + target.parentNode.previousElementSibling.value);
-    changeInputChecked(target);
-  }
-
-  function deleteFilter() {
-    for (var i = 0; i < filterButtons.length; i++) {
-      image.classList.remove('filter-' + filterButtons[i].value);
-    }
-  }
-
-  function deleteAreaChecked(array) {
-    for (var i = 0; i < array.length; i++) {
-      array[i].setAttribute('aria-checked', 'false');
-    }
-  }
-
-  function toggleAriaChecked(element) {
-    var pressed = (element.getAttribute('aria-checked') === 'true');
-    element.setAttribute('aria-checked', !pressed);
-  }
-
-  function changeInputChecked(target) {
-    for (var i = 0; i < filters.length; i++) {
-      var targetRadioInput = filters[i].parentNode.previousElementSibling;
-      if (targetRadioInput.hasAttribute('checked')) {
-        targetRadioInput.removeAttribute('checked');
-      }
-    }
-    target.parentNode.previousElementSibling.setAttribute('checked', 'true');
-  }
-
-  function isEnterKey(evt) {
-    return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
-  }
-<<<<<<< HEAD
-=======
->>>>>>> parent of 20b304e... half initializeFilters
-=======
->>>>>>> parent of c37bd83... half initializeScale
-=======
->>>>>>> parent of 3d5dd64... revert filters
 })();
