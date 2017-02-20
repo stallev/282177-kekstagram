@@ -5,6 +5,8 @@
   var uploadFile = document.querySelector('.upload-file');
   var buttonCloseModal = document.querySelector('.upload-form-cancel');
   var scaleControls = document.querySelector('.upload-resize-controls');
+  var image = document.querySelector('.upload-form-preview > img');
+  var imageSize = document.querySelector('.upload-resize-controls-value');
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
@@ -20,7 +22,7 @@
   document.addEventListener('keydown', onCloseByEscape);
 
   window.initializeFilters();
-  window.initializeScale(scaleControls, imageSizeStep, imageSizeValue);
+  window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, resizeImage);
 
   function onOpen(event) {
     event.preventDefault();
@@ -53,5 +55,10 @@
     if (event.keyCode && event.keyCode === ESC_KEY_CODE) {
       close();
     }
+  }
+
+  function resizeImage(size) {
+    image.style.transform = 'scale(' + size + ')';
+    imageSize.value = size * 100 + '%';
   }
 })();
