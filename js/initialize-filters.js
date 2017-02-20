@@ -1,7 +1,7 @@
 'use strict';
 
 window.initializeFilters = (function () {
-  return function () {
+  return function (applyFilter) {
     var filters = document.querySelectorAll('.upload-filter-preview');
     var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
     var filterLabels = document.querySelector('.upload-filter-controls');
@@ -16,7 +16,7 @@ window.initializeFilters = (function () {
       // make all attributes area-checked false
       deleteAreaChecked(filters);
       toggleAriaChecked(target);
-      image.classList.add('filter-' + target.parentNode.previousElementSibling.value);
+      applyFilter(target);
       changeInputChecked(target);
     }
 

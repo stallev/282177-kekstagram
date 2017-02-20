@@ -21,7 +21,7 @@
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
-  window.initializeFilters();
+  window.initializeFilters(applyFilter);
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, resizeImage);
 
   function onOpen(event) {
@@ -60,5 +60,9 @@
   function resizeImage(size) {
     image.style.transform = 'scale(' + size + ')';
     imageSize.value = size * 100 + '%';
+  }
+
+  function applyFilter (element) {
+    image.classList.add('filter-' + element.parentNode.previousElementSibling.value);
   }
 })();
