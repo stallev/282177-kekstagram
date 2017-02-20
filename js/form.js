@@ -5,6 +5,9 @@
   var uploadFile = document.querySelector('.upload-file');
   var buttonCloseModal = document.querySelector('.upload-form-cancel');
   var scaleControls = document.querySelector('.upload-resize-controls');
+  var filterLabels = document.querySelector('.upload-filter-controls');
+  var filters = document.querySelectorAll('.upload-filter-preview');
+  var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
@@ -19,11 +22,14 @@
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
+<<<<<<< HEAD
   window.initializeFilters();
 <<<<<<< HEAD
+=======
+  window.initializeFilters(filterLabels);
+>>>>>>> parent of 3d5dd64... revert filters
   window.initializeScale(scaleControls);
 
-<<<<<<< HEAD
   window.onSelectFilterByEnter(function (event) {
     if (isEnterKey(event)) {
       toggleFilter(event.target);
@@ -39,16 +45,13 @@
   });
 
   window.decreasingScale(function () {
-=======
-  window.decreasingScale(function() {
->>>>>>> parent of 20b304e... half initializeFilters
     if (imageSizeValue > minImageSize) {
       imageSizeValue -= imageSizeStep;
       resizeImage(imageSizeValue / 100);
     }
   });
 
-  window.increasingScale(function() {
+  window.increasingScale(function () {
     if (imageSizeValue < maxImageSize) {
       imageSizeValue += imageSizeStep;
       resizeImage(imageSizeValue / 100);
@@ -96,7 +99,6 @@
     image.style.webkitTransform = 'scale(' + size + ')';
     imageSize.value = size * 100 + '%';
   }
-<<<<<<< HEAD
 
 
   function toggleFilter(target) {
@@ -138,8 +140,11 @@
   function isEnterKey(evt) {
     return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
   }
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 20b304e... half initializeFilters
 =======
 >>>>>>> parent of c37bd83... half initializeScale
+=======
+>>>>>>> parent of 3d5dd64... revert filters
 })();
