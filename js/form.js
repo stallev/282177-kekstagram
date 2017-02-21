@@ -9,6 +9,7 @@
   var imageSize = document.querySelector('.upload-resize-controls-value');
   var filterLabels = document.querySelector('.upload-filter-controls');
 
+
   var imageSizeValue = 100;
   var imageSizeStep = 25;
 
@@ -58,12 +59,13 @@
     }
   }
 
+  function applyFilter(newFilter, oldFilter) {
+    image.classList.remove('filter-' + oldFilter);
+    image.classList.add('filter-' + newFilter);
+  }
+
   function callback(size) {
     image.style.transform = 'scale(' + size + ')';
     imageSize.value = size * 100 + '%';
-  }
-
-  function applyFilter(element) {
-    image.classList.add('filter-' + element.parentNode.previousElementSibling.value);
   }
 })();
