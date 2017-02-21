@@ -5,6 +5,8 @@
   var uploadFile = document.querySelector('.upload-file');
   var buttonCloseModal = document.querySelector('.upload-form-cancel');
   var scaleControls = document.querySelector('.upload-resize-controls');
+  var image = document.querySelector('.upload-form-preview > img');
+  var filterLabels = document.querySelector('.upload-filter-controls');
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
@@ -19,8 +21,8 @@
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
-  window.initializeFilters();
-  window.initializeScale(scaleControls, imageSizeStep, imageSizeValue);
+  window.initializeFilters(filterLabels, applyFilter);
+  window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
   function onOpen(event) {
     event.preventDefault();
@@ -53,5 +55,14 @@
     if (event.keyCode && event.keyCode === ESC_KEY_CODE) {
       close();
     }
+  }
+
+  function applyFilter(newFilter, oldFilter) {
+    image.classList.remove('filter-' + oldFilter);
+    image.classList.add('filter-' + newFilter);
+  }
+
+  function applyScale(size) {
+    image.style.transform = 'scale(' + size + ')';
   }
 })();

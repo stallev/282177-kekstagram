@@ -1,29 +1,25 @@
 'use strict';
 
 window.initializeFilters = (function () {
-  return function () {
+  return function (filterLabels, callback) {
     var filters = document.querySelectorAll('.upload-filter-preview');
-    var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
-    var filterLabels = document.querySelector('.upload-filter-controls');
-    var image = document.querySelector('.upload-form-preview > img');
     var ENTER_KEY_CODE = 13;
 
     filterLabels.addEventListener('click', onSelectFilter);
     filterLabels.addEventListener('keydown', onSelectFilterByEnter);
 
+    var oldFilter = 'none';
+    var newFilter;
+
     function toggleFilter(target) {
-      deleteFilter();
       // make all attributes area-checked false
       deleteAreaChecked(filters);
       toggleAriaChecked(target);
-      image.classList.add('filter-' + target.parentNode.previousElementSibling.value);
-      changeInputChecked(target);
-    }
-
-    function deleteFilter() {
-      for (var i = 0; i < filterButtons.length; i++) {
-        image.classList.remove('filter-' + filterButtons[i].value);
+      if (typeof callback === 'function') {
+        callback(newFilter, oldFilter);
       }
+      changeInputChecked(target);
+      oldFilter = newFilter;
     }
 
     function deleteAreaChecked(array) {
@@ -35,6 +31,7 @@ window.initializeFilters = (function () {
     function toggleAriaChecked(element) {
       var pressed = (element.getAttribute('aria-checked') === 'true');
       element.setAttribute('aria-checked', !pressed);
+      newFilter = element.parentNode.previousElementSibling.value;
     }
 
     function changeInputChecked(target) {
@@ -66,4 +63,3 @@ window.initializeFilters = (function () {
     }
   };
 })();
-

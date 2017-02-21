@@ -1,11 +1,11 @@
 'use strict';
 
 window.initializeScale = (function () {
-  return function (element, step, imageSizeValue) {
-    var imageSize = document.querySelector('.upload-resize-controls-value');
-    var image = document.querySelector('.upload-form-preview > img');
+
+  return function (element, step, imageSizeValue, callback) {
     var increasingScaleButton = element.querySelector('.upload-resize-controls-button-inc');
     var decreasingScaleButton = element.querySelector('.upload-resize-controls-button-dec');
+    var imageSize = document.querySelector('.upload-resize-controls-value');
 
     var minImageSize = 25;
     var maxImageSize = 100;
@@ -16,21 +16,21 @@ window.initializeScale = (function () {
     function increaseScale() {
       if (imageSizeValue < maxImageSize) {
         imageSizeValue += step;
-        resizeImage(imageSizeValue / 100);
+        if (typeof callback === 'function') {
+          callback(imageSizeValue / 100);
+        }
+        imageSize.value = imageSizeValue + '%';
       }
     }
 
     function decreaseScale() {
       if (imageSizeValue > minImageSize) {
         imageSizeValue -= step;
-        resizeImage(imageSizeValue / 100);
+        if (typeof callback === 'function') {
+          callback(imageSizeValue / 100);
+        }
+        imageSize.value = imageSizeValue + '%';
       }
-    }
-
-    function resizeImage(size) {
-      image.style.transform = 'scale(' + size + ')';
-      image.style.webkitTransform = 'scale(' + size + ')';
-      imageSize.value = size * 100 + '%';
     }
   };
 })();
