@@ -1,10 +1,9 @@
 'use strict';
 
 window.initializeFilters = (function () {
-  return function (applyFilter) {
+  return function (filterLabels, applyFilter) {
     var filters = document.querySelectorAll('.upload-filter-preview');
     var filterButtons = document.querySelectorAll('input[name = "upload-filter"]');
-    var filterLabels = document.querySelector('.upload-filter-controls');
     var image = document.querySelector('.upload-form-preview > img');
     var ENTER_KEY_CODE = 13;
 
