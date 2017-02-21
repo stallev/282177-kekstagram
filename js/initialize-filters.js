@@ -1,7 +1,7 @@
 'use strict';
 
 window.initializeFilters = (function () {
-  return function (filterLabels, applyFilter) {
+  return function (filterLabels, callback) {
     var filters = document.querySelectorAll('.upload-filter-preview');
     var ENTER_KEY_CODE = 13;
 
@@ -15,8 +15,8 @@ window.initializeFilters = (function () {
       // make all attributes area-checked false
       deleteAreaChecked(filters);
       toggleAriaChecked(target);
-      if (typeof applyFilter === 'function') {
-        applyFilter(newFilter, oldFilter);
+      if (typeof callback === 'function') {
+        callback(newFilter, oldFilter);
       }
       changeInputChecked(target);
       oldFilter = newFilter;

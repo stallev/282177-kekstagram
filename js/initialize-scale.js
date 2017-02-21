@@ -18,8 +18,8 @@ window.initializeScale = (function () {
         imageSizeValue += step;
         if (typeof callback === 'function') {
           callback(imageSizeValue / 100);
-          imageSize.value = imageSizeValue + '%';
         }
+        imageSize.value = imageSizeValue + '%';
       }
     }
 
@@ -28,8 +28,8 @@ window.initializeScale = (function () {
         imageSizeValue -= step;
         if (typeof callback === 'function') {
           callback(imageSizeValue / 100);
-          imageSize.value = imageSizeValue + '%';
         }
+        imageSize.value = imageSizeValue + '%';
       }
     }
   };
