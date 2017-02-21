@@ -6,9 +6,7 @@
   var buttonCloseModal = document.querySelector('.upload-form-cancel');
   var scaleControls = document.querySelector('.upload-resize-controls');
   var image = document.querySelector('.upload-form-preview > img');
-  var imageSize = document.querySelector('.upload-resize-controls-value');
   var filterLabels = document.querySelector('.upload-filter-controls');
-
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
@@ -24,7 +22,7 @@
   document.addEventListener('keydown', onCloseByEscape);
 
   window.initializeFilters(filterLabels, applyFilter);
-  window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, callback);
+  window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
   function onOpen(event) {
     event.preventDefault();
@@ -64,8 +62,7 @@
     image.classList.add('filter-' + newFilter);
   }
 
-  function callback(size) {
+  function applyScale(size) {
     image.style.transform = 'scale(' + size + ')';
-    imageSize.value = size * 100 + '%';
   }
 })();

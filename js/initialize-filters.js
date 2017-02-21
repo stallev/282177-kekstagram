@@ -10,6 +10,7 @@ window.initializeFilters = (function () {
 
     var oldFilter = 'none';
     var newFilter;
+
     function toggleFilter(target) {
       // make all attributes area-checked false
       deleteAreaChecked(filters);
@@ -31,7 +32,6 @@ window.initializeFilters = (function () {
       var pressed = (element.getAttribute('aria-checked') === 'true');
       element.setAttribute('aria-checked', !pressed);
       newFilter = element.parentNode.previousElementSibling.value;
-
     }
 
     function changeInputChecked(target) {

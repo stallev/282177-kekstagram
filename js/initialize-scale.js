@@ -2,9 +2,10 @@
 
 window.initializeScale = (function () {
 
-  return function (element, step, imageSizeValue, resizeImage) {
+  return function (element, step, imageSizeValue, callback) {
     var increasingScaleButton = element.querySelector('.upload-resize-controls-button-inc');
     var decreasingScaleButton = element.querySelector('.upload-resize-controls-button-dec');
+    var imageSize = document.querySelector('.upload-resize-controls-value');
 
     var minImageSize = 25;
     var maxImageSize = 100;
@@ -15,8 +16,9 @@ window.initializeScale = (function () {
     function increaseScale() {
       if (imageSizeValue < maxImageSize) {
         imageSizeValue += step;
-        if (typeof resizeImage === 'function') {
-          resizeImage(imageSizeValue / 100);
+        if (typeof callback === 'function') {
+          callback(imageSizeValue / 100);
+          imageSize.value = imageSizeValue + '%';
         }
       }
     }
@@ -24,7 +26,10 @@ window.initializeScale = (function () {
     function decreaseScale() {
       if (imageSizeValue > minImageSize) {
         imageSizeValue -= step;
-        resizeImage(imageSizeValue / 100);
+        if (typeof callback === 'function') {
+          callback(imageSizeValue / 100);
+          imageSize.value = imageSizeValue + '%';
+        }
       }
     }
   };
