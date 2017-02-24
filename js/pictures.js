@@ -14,15 +14,10 @@ window.pictures = (function () {
       pictures.forEach(getNewPicture);
     }
 
-    function getNewPicture(element, i) {
+    function getNewPicture(element) {
       var newPicture = elementToClone.cloneNode(true);
-      newPicture.dataset.pictureId = i;
       newPicture.href = element.url;
       newPicture.querySelector('img').src = element.url;
-      var commentsElement = newPicture.querySelector('.picture-comments').innerHTML;
-      commentsElement = element.comments.length;
-      var likesElement = newPicture.querySelector('.picture-likes').innerHTML;
-      likesElement = element.likes;
       placeForSmallPictures.appendChild(newPicture);
 
       newPicture.addEventListener('click', function (event) {
