@@ -8,13 +8,12 @@ window.pictures = (function () {
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
     var ENTER_KEY_CODE = 13;
-    
+
     var onLoad = function (data) {
       pictures = data;
-      console.log(pictures);
       pictures.forEach(getNewPicture);
     };
-    
+
     function getNewPicture(elem, i) {
       var newPicture = elementToClone.cloneNode(true);
       newPicture.dataset.pictureId = i;
@@ -24,14 +23,14 @@ window.pictures = (function () {
       newPicture.querySelector('.picture-likes').innerHTML = elem.likes;
       placeForSmallPictures.appendChild(newPicture);
     }
-  
+
     placeForSmallPictures.addEventListener('click', showPicture);
     placeForSmallPictures.addEventListener('keydown', function (event) {
       if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
         showPicture(event);
       }
     });
-    
+
     function showPicture(event) {
       event.preventDefault();
       var picture = event.target;
@@ -40,17 +39,17 @@ window.pictures = (function () {
         window.showGallery(pictures[pictureIndex]);
       }
     }
-    
-    function  getArrayIndex(picture){
-      if (picture.classList.contains('pictures')){
+
+    function getArrayIndex(picture) {
+      if (picture.classList.contains('pictures')) {
         return -1;
       }
-      while (!picture.classList.contains('picture')){
+      while (!picture.classList.contains('picture')) {
         picture = picture.parentElement;
       }
       return picture.dataset.pictureId;
     }
-    
+
     window.load(url, onLoad);
   };
 })();
