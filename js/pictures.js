@@ -17,25 +17,38 @@ window.pictures = (function () {
     
     function getNewPicture(elem, i) {
       var newPicture = elementToClone.cloneNode(true);
+      newPicture.dataset.pictureId = i;
       newPicture.href = elem.url;
       newPicture.querySelector('img').src = elem.url;
       newPicture.querySelector('.picture-comments').innerHTML = elem.comments.length;
       newPicture.querySelector('.picture-likes').innerHTML = elem.likes;
       placeForSmallPictures.appendChild(newPicture);
-      newPicture.addEventListener('click', function (evt) {
-        sendToShowGallery(evt, i, newImage);
-      });
-      newPicture.addEventListener('keydown', function (evt) {
-        if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
-          sendToShowGallery(evt, i, newImage);
-        }
-      });
+    }
+  
+    placeForSmallPictures.addEventListener('click', showPicture);
+    placeForSmallPictures.addEventListener('keydown', function (event) {
+      if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
+        showPicture(event);
+      }
+    });
+    
+    function showPicture(event) {
+      event.preventDefault();
+      var picture = event.target;
+      var pictureIndex = getArrayIndex(picture);
+      if (pictureIndex > 0) {
+        window.showGallery(pictures[pictureIndex]);
+      }
     }
     
-    function sendToShowGallery(evt, indexOfElement, smallPicture) {
-      evt.preventDefault();
-      console.log(indexOfElement);
-      window.showGallery(pictures[indexOfElement], smallPicture);
+    function  getArrayIndex(picture){
+      if (picture.classList.contains('pictures')){
+        return -1;
+      }
+      while (!picture.classList.contains('picture')){
+        picture = picture.parentElement;
+      }
+      return picture.dataset.pictureId;
     }
     
     window.load(url, onLoad);

@@ -9,8 +9,9 @@ window.showGallery = (function () {
   var galleryPreviewCommentsCount = galleryPreview.querySelector('.comments-count');
   
   var ENTER_KEY_CODE = 13;
+  var ESC_KEY_CODE = 27;
   
-  return function (element, smallPicture) {
+  return function (element) {
     gallery.classList.remove('invisible');
     galleryCloseButton.focus();
     
@@ -18,10 +19,10 @@ window.showGallery = (function () {
     galleryPreviewCommentsCount.innerHTML = element.comments.length;
     galleryPreviewLikesCount.innerHTML = element.likes;
     
-    smallPicture.focus();
-    
+        
     galleryCloseButton.addEventListener('click', onClose);
     galleryCloseButton.addEventListener('keydown', onKeyClose);
+    document.addEventListener('keydown', onCloseByEscape);
     
     function onClose() {
       closeGallery();
@@ -35,6 +36,12 @@ window.showGallery = (function () {
     
     function closeGallery() {
       gallery.classList.add('invisible');
+    }
+  
+    function onCloseByEscape(event) {
+      if (event.keyCode && event.keyCode === ESC_KEY_CODE) {
+        closeGallery();
+      }
     }
   };
 })();
