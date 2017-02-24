@@ -7,29 +7,31 @@ window.pictures = (function () {
     var placeForSmallPictures = document.querySelector('.pictures');
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
-    
-       
-    function render(ob) {
-      var newPicture = elementToClone.cloneNode(true);
-      newPicture.href = ob.url;
-      newPicture.querySelector('img').src = ob.url;
-      newPicture.querySelector('.picture-comments').innerHTML = ob.comments.length;
-      newPicture.querySelector('.picture-likes').innerHTML = ob.likes;
-      return newPicture;
-    }
+    var ENTER_KEY_CODE = 13;
     
     var onLoad = function (data) {
       pictures = data;
       console.log(pictures);
-      for (var i = 0; i < pictures.length; i++) {
-        var newImage = render(pictures[i]);
-        placeForSmallPictures.appendChild(newImage);
-        newImage.addEventListener('click', function (evt) {
-          sendToShowGallery(evt, i, newImage);
-        });
-        
-      }
+      pictures.forEach(getNewPicture);
     };
+    
+    function getNewPicture(elem, i) {
+      var newPicture = elementToClone.cloneNode(true);
+      newPicture.href = elem.url;
+      newPicture.querySelector('img').src = elem.url;
+      newPicture.querySelector('.picture-comments').innerHTML = elem.comments.length;
+      newPicture.querySelector('.picture-likes').innerHTML = elem.likes;
+      placeForSmallPictures.appendChild(newPicture);
+      newPicture.addEventListener('click', function (evt) {
+        sendToShowGallery(evt, i, newImage);
+      });
+      newPicture.addEventListener('keydown', function (evt) {
+        if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
+          sendToShowGallery(evt, i, newImage);
+        }
+      });
+    }
+    
     function sendToShowGallery(evt, indexOfElement, smallPicture) {
       evt.preventDefault();
       console.log(indexOfElement);

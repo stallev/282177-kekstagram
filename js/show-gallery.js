@@ -18,6 +18,8 @@ window.showGallery = (function () {
     galleryPreviewCommentsCount.innerHTML = element.comments.length;
     galleryPreviewLikesCount.innerHTML = element.likes;
     
+    smallPicture.focus();
+    
     galleryCloseButton.addEventListener('click', onClose);
     galleryCloseButton.addEventListener('keydown', onKeyClose);
     
