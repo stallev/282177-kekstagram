@@ -7,11 +7,18 @@ window.pictures = (function () {
     var placeForSmallPictures = document.querySelector('.pictures');
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
+    var filters = document.querySelector('.filters');
 
     function onLoad(data) {
-      var fragment = document.createDocumentFragment();
       pictures = data;
-      pictures.forEach(function (item) {
+      drawImages(pictures);
+      filters.classList.remove('hidden');
+    }
+
+    function drawImages(picturesArray) {
+      var fragment = document.createDocumentFragment();
+      placeForSmallPictures.innerHTML = '';
+      picturesArray.forEach(function (item) {
         var nodePicture = getNewPicture(item);
         fragment.appendChild(nodePicture);
       });
@@ -29,6 +36,43 @@ window.pictures = (function () {
         window.showGallery(element);
       });
       return newPicture;
+    }
+
+    filters.addEventListener('click', sortingPictures);
+    
+    function sortingPictures(event) {
+      event.preventDefault();
+      renderPictures(event.target.control.id);
+    }
+
+    function renderPictures(filterId) {
+      switch (filterId) {
+        case 'filter-popular':
+          var modifiedArray = pictures;
+          break;
+        case  'filter-new':
+          modifiedArray = sortPicturesByNew();
+          break;
+        case 'filter-discussed':
+          modifiedArray = sortPicturesByDiscussions();
+          break;
+      }
+      drawImages(modifiedArray);
+    }
+
+    function sortPicturesByDiscussions() {
+      return pictures.slice(0).sort(function (item1, item2) {
+        return item1.comments.length - item2.comments.length;
+      })
+    }
+
+    function sortPicturesByNew() {
+      var modifiedArrayOfPictures = [];
+      for (var j = 0; j < 10; j++) {
+        modifiedArrayOfPictures[j] = pictures[(Math.random()*pictures.length).toFixed(0)];
+        console.log(modifiedArrayOfPictures[j]);
+      }
+      return modifiedArrayOfPictures;
     }
     window.load(url, onLoad);
   };
