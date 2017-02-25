@@ -21,7 +21,8 @@ window.pictures = (function () {
     function getNewPicture(element) {
       var newPicture = elementToClone.cloneNode(true);
       newPicture.href = element.url;
-      newPicture.querySelector('img').src = element.url;
+      var image = newPicture.querySelector('img');
+      image.src = element.url;
 
       newPicture.addEventListener('click', function (event) {
         event.preventDefault();
