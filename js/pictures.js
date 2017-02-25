@@ -12,6 +12,7 @@ window.pictures = (function () {
 
     filters.addEventListener('click', sortingPictures);
 
+    window.load(url, onLoad);
     function onLoad(data) {
       pictures = data;
       drawImages(pictures);
@@ -65,15 +66,19 @@ window.pictures = (function () {
     }
 
     function sortPicturesByDiscussions(array) {
-      return array.slice(0).sort(function (item1, item2) {
-        return item1.comments.length - item2.comments.length;
-      });
+      var modifiedArray = array.slice(0);
+      return modifiedArray.sort(compare);
+      function compare(a, b) {
+        return a.comments.length - b.comments.length;
+      }
     }
 
     function sortPicturesByNew(array) {
-      return array.slice(0).sort(function () {
+      var modifiedArray = array.slice(0);
+      return modifiedArray.sort(compareRandomly).slice(0, 10);
+      function compareRandomly() {
         return Math.random() * 10 - 5;
-      }).slice(0, 10);
+      }
     }
 
     function changeInputChecked(target) {
@@ -85,8 +90,6 @@ window.pictures = (function () {
       }
       target.previousElementSibling.setAttribute('checked', 'true');
     }
-
-    window.load(url, onLoad);
   };
 })();
 
