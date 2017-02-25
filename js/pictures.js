@@ -8,6 +8,9 @@ window.pictures = (function () {
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
     var filters = document.querySelector('.filters');
+    var filtersItems = filters.querySelectorAll('.filters-item');
+
+    filters.addEventListener('click', sortingPictures);
 
     function onLoad(data) {
       pictures = data;
@@ -38,40 +41,51 @@ window.pictures = (function () {
       return newPicture;
     }
 
-    filters.addEventListener('click', sortingPictures);
-
     function sortingPictures(event) {
       event.preventDefault();
-      renderPictures(event.target.control.id);
+      if (event.target.classList.contains('filters-item')) {
+        changeInputChecked(event.target);
+        renderPictures(event.target.control.id);
+      }
     }
 
     function renderPictures(filterId) {
-      var modifiedArray;
+      var modifiedArray = pictures;
       switch (filterId) {
         case 'filter-popular':
-          modifiedArray = pictures;
           break;
         case 'filter-new':
-          modifiedArray = sortPicturesByNew();
+          modifiedArray = sortPicturesByNew(modifiedArray);
           break;
         case 'filter-discussed':
-          modifiedArray = sortPicturesByDiscussions();
+          modifiedArray = sortPicturesByDiscussions(modifiedArray);
           break;
       }
       drawImages(modifiedArray);
     }
 
-    function sortPicturesByDiscussions() {
-      return pictures.slice(0).sort(function (item1, item2) {
+    function sortPicturesByDiscussions(array) {
+      return array.slice(0).sort(function (item1, item2) {
         return item1.comments.length - item2.comments.length;
       });
     }
 
-    function sortPicturesByNew() {
-      return pictures.sort(function () {
+    function sortPicturesByNew(array) {
+      return array.slice(0).sort(function () {
         return Math.random() * 10 - 5;
       }).slice(0, 10);
     }
+
+    function changeInputChecked(target) {
+      for (var i = 0; i < filtersItems.length; i++) {
+        var targetRadioInput = filtersItems[i].previousElementSibling;
+        if (targetRadioInput.hasAttribute('checked')) {
+          targetRadioInput.removeAttribute('checked');
+        }
+      }
+      target.previousElementSibling.setAttribute('checked', 'true');
+    }
+
     window.load(url, onLoad);
   };
 })();
