@@ -73,7 +73,7 @@ window.pictures = (function () {
     function sortPicturesByNew(array) {
       var copy = array.slice(0);
       return copy.sort(function () {
-        return Math.random() * 10 - 5;
+        return Math.random() < 0.5;
       }).slice(0, 10);
     }
   };
