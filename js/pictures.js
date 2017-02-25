@@ -8,9 +8,8 @@ window.pictures = (function () {
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
     var filters = document.querySelector('.filters');
-    var filtersItems = filters.querySelectorAll('.filters-item');
 
-    filters.addEventListener('click', sortingPictures);
+    filters.addEventListener('click', onSortingPictures);
 
     window.load(url, onLoad);
     function onLoad(data) {
@@ -42,15 +41,14 @@ window.pictures = (function () {
       return newPicture;
     }
 
-    function sortingPictures(event) {
-      event.preventDefault();
+    function onSortingPictures(event) {
       if (event.target.classList.contains('filters-item')) {
-        changeInputChecked(event.target);
-        renderPictures(event.target.control.id);
+        var array = sortPictures(event.target.control.id);
+        drawImages(array);
       }
     }
 
-    function renderPictures(filterId) {
+    function sortPictures(filterId) {
       var modifiedArray = pictures;
       switch (filterId) {
         case 'filter-popular':
@@ -62,33 +60,21 @@ window.pictures = (function () {
           modifiedArray = sortPicturesByDiscussions(modifiedArray);
           break;
       }
-      drawImages(modifiedArray);
+      return modifiedArray;
     }
 
     function sortPicturesByDiscussions(array) {
-      var modifiedArray = array.slice(0);
-      return modifiedArray.sort(compare);
-      function compare(a, b) {
+      var copy = array.slice(0);
+      return copy.sort(function (a, b) {
         return a.comments.length - b.comments.length;
-      }
+      });
     }
 
     function sortPicturesByNew(array) {
-      var modifiedArray = array.slice(0);
-      return modifiedArray.sort(compareRandomly).slice(0, 10);
-      function compareRandomly() {
+      var copy = array.slice(0);
+      return copy.sort(function () {
         return Math.random() * 10 - 5;
-      }
-    }
-
-    function changeInputChecked(target) {
-      for (var i = 0; i < filtersItems.length; i++) {
-        var targetRadioInput = filtersItems[i].previousElementSibling;
-        if (targetRadioInput.hasAttribute('checked')) {
-          targetRadioInput.removeAttribute('checked');
-        }
-      }
-      target.previousElementSibling.setAttribute('checked', 'true');
+      }).slice(0, 10);
     }
   };
 })();
