@@ -7,7 +7,6 @@ window.pictures = (function () {
     var placeForSmallPictures = document.querySelector('.pictures');
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
-    var ENTER_KEY_CODE = 13;
 
     function onLoad(data) {
       pictures = data;
@@ -24,16 +23,7 @@ window.pictures = (function () {
         event.preventDefault();
         window.showGallery(element);
       });
-
-      newPicture.addEventListener('keydown', function (event) {
-        if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
-          event.preventDefault();
-          window.showGallery(element);
-        }
-
-      });
     }
-
     window.load(url, onLoad);
   };
 })();
