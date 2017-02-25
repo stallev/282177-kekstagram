@@ -39,18 +39,19 @@ window.pictures = (function () {
     }
 
     filters.addEventListener('click', sortingPictures);
-    
+
     function sortingPictures(event) {
       event.preventDefault();
       renderPictures(event.target.control.id);
     }
 
     function renderPictures(filterId) {
+      var modifiedArray = pictures;
       switch (filterId) {
         case 'filter-popular':
-          var modifiedArray = pictures;
+          modifiedArray = pictures;
           break;
-        case  'filter-new':
+        case 'filter-new':
           modifiedArray = sortPicturesByNew();
           break;
         case 'filter-discussed':
@@ -58,21 +59,21 @@ window.pictures = (function () {
           break;
       }
       drawImages(modifiedArray);
+      modifiedArray = null;
     }
 
     function sortPicturesByDiscussions() {
       return pictures.slice(0).sort(function (item1, item2) {
         return item1.comments.length - item2.comments.length;
-      })
+      });
     }
 
     function sortPicturesByNew() {
-      var modifiedArrayOfPictures = [];
-      for (var j = 0; j < 10; j++) {
-        modifiedArrayOfPictures[j] = pictures[(Math.random()*pictures.length).toFixed(0)];
-        console.log(modifiedArrayOfPictures[j]);
-      }
-      return modifiedArrayOfPictures;
+      var modifiedPictures = pictures;
+      modifiedPictures.sort(function () {
+        return Math.random() * 10 - 5;
+      });
+      return modifiedPictures.slice(0, 10);
     }
     window.load(url, onLoad);
   };
