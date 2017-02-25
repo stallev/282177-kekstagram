@@ -9,20 +9,25 @@ window.pictures = (function () {
     var elementToClone = elementTemplate.content.querySelector('.picture');
 
     function onLoad(data) {
+      var fragment = document.createDocumentFragment();
       pictures = data;
-      pictures.forEach(getNewPicture);
+      pictures.forEach(function (item) {
+        var nodePicture = getNewPicture(item);
+        fragment.appendChild(nodePicture);
+      });
+      placeForSmallPictures.appendChild(fragment);
     }
 
     function getNewPicture(element) {
       var newPicture = elementToClone.cloneNode(true);
       newPicture.href = element.url;
       newPicture.querySelector('img').src = element.url;
-      placeForSmallPictures.appendChild(newPicture);
 
       newPicture.addEventListener('click', function (event) {
         event.preventDefault();
         window.showGallery(element);
       });
+      return newPicture;
     }
     window.load(url, onLoad);
   };
