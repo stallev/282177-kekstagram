@@ -46,7 +46,7 @@ window.pictures = (function () {
     }
 
     function renderPictures(filterId) {
-      var modifiedArray = pictures;
+      var modifiedArray;
       switch (filterId) {
         case 'filter-popular':
           modifiedArray = pictures;
@@ -59,7 +59,6 @@ window.pictures = (function () {
           break;
       }
       drawImages(modifiedArray);
-      modifiedArray = null;
     }
 
     function sortPicturesByDiscussions() {
@@ -69,11 +68,9 @@ window.pictures = (function () {
     }
 
     function sortPicturesByNew() {
-      var modifiedPictures = pictures;
-      modifiedPictures.sort(function () {
+      return pictures.sort(function () {
         return Math.random() * 10 - 5;
-      });
-      return modifiedPictures.slice(0, 10);
+      }).slice(0, 10);
     }
     window.load(url, onLoad);
   };
