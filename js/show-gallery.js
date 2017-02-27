@@ -1,4 +1,5 @@
 'use strict';
+
 window.showGallery = (function () {
   var ENTER_KEY_CODE = 13;
   var ESC_KEY_CODE = 27;
@@ -17,13 +18,13 @@ window.showGallery = (function () {
     close();
   }
 
-  function onKeyClose() {
+  function onKeyClose(event) {
     if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
       close();
     }
   }
 
-  function onCloseByEscape() {
+  function onCloseByEscape(event) {
     if (event.keyCode && event.keyCode === ESC_KEY_CODE) {
       close();
     }

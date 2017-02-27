@@ -1,8 +1,9 @@
 'use strict';
+
 (function () {
   var uploadOverlay = document.querySelector('.upload-overlay');
-  var uploadSelectImage = document.getElementById('upload-select-image');
-  var uploadFile = document.querySelector('.upload-file');
+  var imageUploadingForm = document.getElementById('upload-select-image');
+  var fileInput = document.querySelector('.upload-file');
   var buttonCloseModal = document.querySelector('.upload-form-cancel');
   var scaleControls = document.querySelector('.upload-resize-controls');
   var image = document.querySelector('.upload-form-preview > img');
@@ -15,9 +16,9 @@
   var ENTER_KEY_CODE = 13;
 
   uploadOverlay.classList.add('invisible');
-  uploadSelectImage.classList.remove('invisible');
-  uploadFile.addEventListener('click', onOpen);
-  uploadFile.addEventListener('keydown', onOpenByEnter);
+  imageUploadingForm.classList.remove('invisible');
+  fileInput.addEventListener('click', onOpen);
+  fileInput.addEventListener('keydown', onOpenByEnter);
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
@@ -39,12 +40,12 @@
 
   function open() {
     uploadOverlay.classList.remove('invisible');
-    uploadSelectImage.classList.add('invisible');
+    imageUploadingForm.classList.add('invisible');
   }
 
   function close() {
     uploadOverlay.classList.add('invisible');
-    uploadSelectImage.classList.remove('invisible');
+    imageUploadingForm.classList.remove('invisible');
   }
 
   function onClose(event) {

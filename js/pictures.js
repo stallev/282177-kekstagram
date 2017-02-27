@@ -9,7 +9,7 @@ window.pictures = (function () {
     var elementToClone = elementTemplate.content.querySelector('.picture');
     var filters = document.querySelector('.filters');
 
-    filters.addEventListener('click', onSortingPictures);
+    filters.addEventListener('click', onSortPicturesBar);
 
     window.load(url, onLoad);
     function onLoad(data) {
@@ -32,7 +32,11 @@ window.pictures = (function () {
       var newPicture = elementToClone.cloneNode(true);
       newPicture.href = element.url;
       var image = newPicture.querySelector('img');
+      var commentsCount = newPicture.querySelector('.picture-comments');
+      var likesCount = newPicture.querySelector('.picture-likes');
       image.src = element.url;
+      commentsCount.innerHTML = element.comments.length;
+      likesCount.innerHTML = element.likes;
 
       newPicture.addEventListener('click', function (event) {
         event.preventDefault();
@@ -41,7 +45,7 @@ window.pictures = (function () {
       return newPicture;
     }
 
-    function onSortingPictures(event) {
+    function onSortPicturesBar(event) {
       if (event.target.classList.contains('filters-item')) {
         var array = sortPictures(event.target.control.id);
         drawImages(array);
@@ -65,8 +69,8 @@ window.pictures = (function () {
 
     function sortPicturesByDiscussions(array) {
       var copy = array.slice(0);
-      return copy.sort(function (a, b) {
-        return a.comments.length - b.comments.length;
+      return copy.sort(function (pictureFirst, pictureSecond) {
+        return pictureFirst.comments.length - pictureSecond.comments.length;
       });
     }
 
