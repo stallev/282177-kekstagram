@@ -16,7 +16,7 @@ window.initializeScale = (function () {
       if (imageSizeValue < maxImageSize) {
         imageSizeValue += step;
         if (typeof callback === 'function') {
-          callback(imageSizeValue / 100);
+          callback(imageSizeValue);
         }
         imageSize.value = imageSizeValue + '%';
       }
@@ -26,7 +26,7 @@ window.initializeScale = (function () {
       if (imageSizeValue > minImageSize) {
         imageSizeValue -= step;
         if (typeof callback === 'function') {
-          callback(imageSizeValue / 100);
+          callback(imageSizeValue );
         }
         imageSize.value = imageSizeValue + '%';
       }

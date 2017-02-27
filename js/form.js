@@ -62,6 +62,6 @@
   }
 
   function applyScale(size) {
-    image.style.transform = 'scale(' + size + ')';
+    image.style.transform = 'scale(' + size / 100 + ')';
   }
 })();
