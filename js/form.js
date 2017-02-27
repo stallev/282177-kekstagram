@@ -1,23 +1,21 @@
 'use strict';
+
 (function () {
-  var uploadOverlay = document.querySelector('.upload-overlay');
-  var uploadSelectImage = document.getElementById('upload-select-image');
-  var uploadFile = document.querySelector('.upload-file');
-  var buttonCloseModal = document.querySelector('.upload-form-cancel');
-  var scaleControls = document.querySelector('.upload-resize-controls');
-  var image = document.querySelector('.upload-form-preview > img');
-  var filterLabels = document.querySelector('.upload-filter-controls');
+  var formWrapperChangingImage = document.querySelector('.upload-overlay');
+  var formSelectingImage = document.getElementById('upload-select-image');
+  var fileInput = document.querySelector('.upload-file');
+  var buttonCloseModal = formWrapperChangingImage.querySelector('.upload-form-cancel');
+  var scaleControls = formWrapperChangingImage.querySelector('.upload-resize-controls');
+  var image = formWrapperChangingImage.querySelector('.upload-form-preview > img');
+  var filterLabels = formWrapperChangingImage.querySelector('.upload-filter-controls');
 
   var imageSizeValue = 100;
   var imageSizeStep = 25;
 
-  var ESC_KEY_CODE = 27;
-  var ENTER_KEY_CODE = 13;
-
-  uploadOverlay.classList.add('invisible');
-  uploadSelectImage.classList.remove('invisible');
-  uploadFile.addEventListener('click', onOpen);
-  uploadFile.addEventListener('keydown', onOpenByEnter);
+  formWrapperChangingImage.classList.add('invisible');
+  formSelectingImage.classList.remove('invisible');
+  fileInput.addEventListener('click', onOpen);
+  fileInput.addEventListener('keydown', onOpenByEnter);
   buttonCloseModal.addEventListener('click', onClose);
   document.addEventListener('keydown', onCloseByEscape);
 
@@ -31,20 +29,20 @@
   }
 
   function onOpenByEnter(event) {
-    if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
+    if (window.helpers.isEnterKey(event)) {
       event.preventDefault();
       open();
     }
   }
 
   function open() {
-    uploadOverlay.classList.remove('invisible');
-    uploadSelectImage.classList.add('invisible');
+    formWrapperChangingImage.classList.remove('invisible');
+    formSelectingImage.classList.add('invisible');
   }
 
   function close() {
-    uploadOverlay.classList.add('invisible');
-    uploadSelectImage.classList.remove('invisible');
+    formWrapperChangingImage.classList.add('invisible');
+    formSelectingImage.classList.remove('invisible');
   }
 
   function onClose(event) {
@@ -53,7 +51,7 @@
   }
 
   function onCloseByEscape(event) {
-    if (event.keyCode && event.keyCode === ESC_KEY_CODE) {
+    if (window.helpers.isEscapeKey(event)) {
       close();
     }
   }
@@ -64,6 +62,6 @@
   }
 
   function applyScale(size) {
-    image.style.transform = 'scale(' + size + ')';
+    image.style.transform = 'scale(' + size / 100 + ')';
   }
 })();

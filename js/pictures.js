@@ -4,52 +4,69 @@ window.pictures = (function () {
   return function () {
     var url = 'https://intensive-javascript-server-myophkugvq.now.sh/kekstagram/data';
     var pictures = [];
+    var drawingPictures = [];
     var placeForSmallPictures = document.querySelector('.pictures');
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
     var filters = document.querySelector('.filters');
 
-    filters.addEventListener('click', onSortingPictures);
+    filters.addEventListener('click', onSortByClick);
 
     window.load(url, onLoad);
     function onLoad(data) {
+      data.forEach(function (item) {
+        item.element = getNewPicture(item);
+      });
       pictures = data;
       drawImages(pictures);
       filters.classList.remove('hidden');
     }
 
-    function drawImages(picturesArray) {
+    function drawImages(items) {
       var fragment = document.createDocumentFragment();
-      placeForSmallPictures.innerHTML = '';
-      picturesArray.forEach(function (item) {
-        var nodePicture = getNewPicture(item);
-        fragment.appendChild(nodePicture);
+      items.forEach(function (item) {
+        fragment.appendChild(item.element);
+        item.element.addEventListener('click', item.handler);
+        drawingPictures.push(item);
       });
       placeForSmallPictures.appendChild(fragment);
     }
 
-    function getNewPicture(element) {
-      var newPicture = elementToClone.cloneNode(true);
-      newPicture.href = element.url;
-      var image = newPicture.querySelector('img');
-      image.src = element.url;
-
-      newPicture.addEventListener('click', function (event) {
-        event.preventDefault();
-        window.showGallery(element);
+    function removeImages() {
+      drawingPictures.forEach(function (item) {
+        item.element.removeEventListener('click', item.handler);
       });
+      placeForSmallPictures.innerHTML = '';
+      drawingPictures = [];
+    }
+
+    function getNewPicture(picture) {
+      var newPicture = elementToClone.cloneNode(true);
+      var image = newPicture.querySelector('img');
+      var commentsCount = newPicture.querySelector('.picture-comments');
+      var likesCount = newPicture.querySelector('.picture-likes');
+      image.src = picture.url;
+      commentsCount.innerHTML = picture.comments.length;
+      likesCount.innerHTML = picture.likes;
+
+      var onClick = function (event) {
+        event.preventDefault();
+        window.showGallery(picture);
+      };
+      picture.handler = onClick;
       return newPicture;
     }
 
-    function onSortingPictures(event) {
+    function onSortByClick(event) {
       if (event.target.classList.contains('filters-item')) {
-        var array = sortPictures(event.target.control.id);
+        removeImages();
+        var array = sortPictures(event.target.htmlFor);
         drawImages(array);
       }
     }
 
     function sortPictures(filterId) {
-      var modifiedArray = pictures;
+      var modifiedArray = pictures.slice(0);
       switch (filterId) {
         case 'filter-popular':
           break;
@@ -63,8 +80,7 @@ window.pictures = (function () {
       return modifiedArray;
     }
 
-    function sortPicturesByDiscussions(array) {
-      var copy = array.slice(0);
+    function sortPicturesByDiscussions(copy) {
       return copy.sort(function (a, b) {
         return a.comments.length - b.comments.length;
       });

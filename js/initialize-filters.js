@@ -3,7 +3,6 @@
 window.initializeFilters = (function () {
   return function (filterLabels, callback) {
     var filters = document.querySelectorAll('.upload-filter-preview');
-    var ENTER_KEY_CODE = 13;
 
     filterLabels.addEventListener('click', onSelectFilter);
     filterLabels.addEventListener('keydown', onSelectFilterByEnter);
@@ -45,21 +44,16 @@ window.initializeFilters = (function () {
     }
 
     function onSelectFilterByEnter(event) {
-      if (isEnterKey(event)) {
+      if (window.helpers.isEnterKey(event)) {
         toggleFilter(event.target);
       }
     }
 
     function onSelectFilter(event) {
       event.preventDefault();
-      if (!event.target.classList.contains('upload-filter-preview')) {
-        return;
+      if (event.target.classList.contains('upload-filter-preview')) {
+        toggleFilter(event.target);
       }
-      toggleFilter(event.target);
-    }
-
-    function isEnterKey(evt) {
-      return (evt.keyCode && evt.keyCode === ENTER_KEY_CODE);
     }
   };
 })();

@@ -1,13 +1,11 @@
 'use strict';
-window.showGallery = (function () {
-  var ENTER_KEY_CODE = 13;
-  var ESC_KEY_CODE = 27;
 
+window.showGallery = (function () {
   var overlay = document.querySelector('.gallery-overlay');
-  var closeButton = document.querySelector('.gallery-overlay-close');
-  var previewImage = document.querySelector('.gallery-overlay-image');
-  var previewLikesCount = document.querySelector('.likes-count');
-  var previewCommentsCount = document.querySelector('.comments-count');
+  var closeButton = overlay.querySelector('.gallery-overlay-close');
+  var previewImage = overlay.querySelector('.gallery-overlay-image');
+  var previewLikesCount = overlay.querySelector('.likes-count');
+  var previewCommentsCount = overlay.querySelector('.comments-count');
 
   function close() {
     overlay.classList.add('invisible');
@@ -17,14 +15,14 @@ window.showGallery = (function () {
     close();
   }
 
-  function onKeyClose() {
-    if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
+  function onKeyClose(event) {
+    if (window.helpers.isEnterKey(event)) {
       close();
     }
   }
 
-  function onCloseByEscape() {
-    if (event.keyCode && event.keyCode === ESC_KEY_CODE) {
+  function onCloseByEscape(event) {
+    if (window.helpers.isEscapeKey(event)) {
       close();
     }
   }
