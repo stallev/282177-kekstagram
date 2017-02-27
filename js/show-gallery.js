@@ -1,14 +1,11 @@
 'use strict';
 
 window.showGallery = (function () {
-  var ENTER_KEY_CODE = 13;
-  var ESC_KEY_CODE = 27;
-
   var overlay = document.querySelector('.gallery-overlay');
-  var closeButton = document.querySelector('.gallery-overlay-close');
-  var previewImage = document.querySelector('.gallery-overlay-image');
-  var previewLikesCount = document.querySelector('.likes-count');
-  var previewCommentsCount = document.querySelector('.comments-count');
+  var closeButton = overlay.querySelector('.gallery-overlay-close');
+  var previewImage = overlay.querySelector('.gallery-overlay-image');
+  var previewLikesCount = overlay.querySelector('.likes-count');
+  var previewCommentsCount = overlay.querySelector('.comments-count');
 
   function close() {
     overlay.classList.add('invisible');
@@ -19,13 +16,13 @@ window.showGallery = (function () {
   }
 
   function onKeyClose(event) {
-    if (event.keyCode && event.keyCode === ENTER_KEY_CODE) {
+    if (window.helpers.isEnterKey(event)) {
       close();
     }
   }
 
   function onCloseByEscape(event) {
-    if (event.keyCode && event.keyCode === ESC_KEY_CODE) {
+    if (window.helpers.isEscapeKey(event)) {
       close();
     }
   }
