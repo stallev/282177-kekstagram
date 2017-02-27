@@ -22,16 +22,16 @@ window.pictures = (function () {
       filters.classList.remove('hidden');
     }
 
-    function drawImages(pictures) {
+    function drawImages(items) {
       var fragment = document.createDocumentFragment();
-      pictures.forEach(function (item) {
+      items.forEach(function (item) {
         fragment.appendChild(item.element);
         item.element.addEventListener('click', item.handler);
         drawingPictures.push(item);
       });
       placeForSmallPictures.appendChild(fragment);
     }
-    
+
     function removeImages() {
       drawingPictures.forEach(function (item) {
         item.element.removeEventListener('click', item.handler);

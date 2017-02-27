@@ -26,7 +26,7 @@ window.initializeScale = (function () {
       if (imageSizeValue > minImageSize) {
         imageSizeValue -= step;
         if (typeof callback === 'function') {
-          callback(imageSizeValue );
+          callback(imageSizeValue);
         }
         imageSize.value = imageSizeValue + '%';
       }
