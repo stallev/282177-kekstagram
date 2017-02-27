@@ -4,7 +4,6 @@ window.pictures = (function () {
   return function () {
     var url = 'https://intensive-javascript-server-myophkugvq.now.sh/kekstagram/data';
     var pictures = [];
-    var arrayOfPicturesNodes = [];
     var placeForSmallPictures = document.querySelector('.pictures');
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
@@ -14,18 +13,19 @@ window.pictures = (function () {
 
     window.load(url, onLoad);
     function onLoad(data) {
-      pictures = data;
+      pictures = data.forEach(function (item) {
+        item.element = getNewPicture(item);
+      });
+      console.log(pictures);
       drawImages(pictures);
       filters.classList.remove('hidden');
-      arrayOfPicturesNodes = document.querySelectorAll('.picture');
     }
 
-    function drawImages(picturesArray) {
+    function drawImages(pictures) {
       var fragment = document.createDocumentFragment();
       placeForSmallPictures.innerHTML = '';
-      picturesArray.forEach(function (item) {
-        var nodePicture = getNewPicture(item);
-        fragment.appendChild(nodePicture);
+      pictures.forEach(function (item) {
+        fragment.appendChild(item.element);
       });
       placeForSmallPictures.appendChild(fragment);
     }
@@ -49,19 +49,13 @@ window.pictures = (function () {
 
     function onSortPicturesBar(event) {
       if (event.target.classList.contains('filters-item')) {
-        var array = sortPictures(event.target.control.id);
-        placeForSmallPictures.innerHTML = '';
-        array.forEach(function (picture) {
-          placeForSmallPictures.appendChild(picture);
-        });
+        var array = sortPictures(event.target.htmlFor);
+        drawImages(array);
       }
     }
 
     function sortPictures(filterId) {
-      var modifiedArray = [];
-      for (var i = arrayOfPicturesNodes.length; i--;) {
-        modifiedArray.unshift(arrayOfPicturesNodes[i]);
-      }
+      var modifiedArray = pictures.slice(0);
       switch (filterId) {
         case 'filter-popular':
           break;
@@ -78,7 +72,7 @@ window.pictures = (function () {
     function sortPicturesByDiscussions(array) {
       var copy = array.slice(0);
       return copy.sort(function (pictureFirst, pictureSecond) {
-        return Number(pictureFirst.querySelector('.picture-comments')) - Number(pictureSecond.querySelector('.picture-comments'));
+        return Number(pictureFirst.element.querySelector('.picture-comments')) - Number(pictureSecond.element.querySelector('.picture-comments'));
       });
     }
 
