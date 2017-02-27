@@ -16,7 +16,6 @@ window.pictures = (function () {
       pictures = data.forEach(function (item) {
         item.element = getNewPicture(item);
       });
-      console.log(pictures);
       drawImages(pictures);
       filters.classList.remove('hidden');
     }
