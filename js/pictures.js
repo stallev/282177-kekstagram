@@ -4,6 +4,7 @@ window.pictures = (function () {
   return function () {
     var url = 'https://intensive-javascript-server-myophkugvq.now.sh/kekstagram/data';
     var pictures = [];
+    var arrayOfPicturesNodes = [];
     var placeForSmallPictures = document.querySelector('.pictures');
     var elementTemplate = document.querySelector('#picture-template');
     var elementToClone = elementTemplate.content.querySelector('.picture');
@@ -16,6 +17,7 @@ window.pictures = (function () {
       pictures = data;
       drawImages(pictures);
       filters.classList.remove('hidden');
+      arrayOfPicturesNodes = document.querySelectorAll('.picture');
     }
 
     function drawImages(picturesArray) {
@@ -53,7 +55,7 @@ window.pictures = (function () {
     }
 
     function sortPictures(filterId) {
-      var modifiedArray = pictures;
+      var modifiedArray = arrayOfPicturesNodes;
       switch (filterId) {
         case 'filter-popular':
           break;
