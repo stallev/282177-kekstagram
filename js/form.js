@@ -14,16 +14,16 @@
 
   formWrapperChangingImage.classList.add('invisible');
   formSelectingImage.classList.remove('invisible');
-  fileInput.addEventListener('click', onOpen);
+  fileInput.addEventListener('click', onOpenByClick);
   fileInput.addEventListener('keydown', onOpenByEnter);
-  buttonCloseModal.addEventListener('click', onClose);
+  buttonCloseModal.addEventListener('click', onCloseByClick);
   document.addEventListener('keydown', onCloseByEscape);
 
   window.pictures();
   window.initializeFilters(filterLabels, applyFilter);
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
-  function onOpen(event) {
+  function onOpenByClick(event) {
     event.preventDefault();
     open();
   }
@@ -45,7 +45,7 @@
     formSelectingImage.classList.remove('invisible');
   }
 
-  function onClose(event) {
+  function onCloseByClick(event) {
     event.preventDefault();
     close();
   }

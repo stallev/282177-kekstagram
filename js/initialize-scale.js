@@ -9,10 +9,10 @@ window.initializeScale = (function () {
     var minImageSize = 25;
     var maxImageSize = 100;
 
-    buttonScaleDecreasing.addEventListener('click', decreaseScale);
-    buttonScaleIncreasing.addEventListener('click', increaseScale);
+    buttonScaleDecreasing.addEventListener('click', onDecreaseScaleByClick);
+    buttonScaleIncreasing.addEventListener('click', onIncreaseScaleByClick);
 
-    function increaseScale() {
+    function onIncreaseScaleByClick() {
       if (imageSizeValue < maxImageSize) {
         imageSizeValue += step;
         if (typeof callback === 'function') {
@@ -22,7 +22,7 @@ window.initializeScale = (function () {
       }
     }
 
-    function decreaseScale() {
+    function onDecreaseScaleByClick() {
       if (imageSizeValue > minImageSize) {
         imageSizeValue -= step;
         if (typeof callback === 'function') {

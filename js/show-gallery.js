@@ -11,7 +11,7 @@ window.showGallery = (function () {
     overlay.classList.add('invisible');
   }
 
-  function onClose() {
+  function onCloseByClick() {
     close();
   }
 
@@ -27,7 +27,7 @@ window.showGallery = (function () {
     }
   }
 
-  closeButton.addEventListener('click', onClose);
+  closeButton.addEventListener('click', onCloseByClick);
   closeButton.addEventListener('keydown', onKeyClose);
   document.addEventListener('keydown', onCloseByEscape);
 
