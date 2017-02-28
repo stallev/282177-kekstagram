@@ -4,7 +4,7 @@ window.initializeFilters = (function () {
   return function (filterLabels, callback) {
     var filters = document.querySelectorAll('.upload-filter-preview');
 
-    filterLabels.addEventListener('click', onSelectFilter);
+    filterLabels.addEventListener('click', onSelectFilterByClick);
     filterLabels.addEventListener('keydown', onSelectFilterByEnter);
 
     var oldFilter = 'none';
@@ -49,7 +49,7 @@ window.initializeFilters = (function () {
       }
     }
 
-    function onSelectFilter(event) {
+    function onSelectFilterByClick(event) {
       event.preventDefault();
       if (event.target.classList.contains('upload-filter-preview')) {
         toggleFilter(event.target);
