@@ -29,7 +29,7 @@
 
   function onFileInputByEnter(event) {
     if (window.helpers.isEnterKey(event)) {
-      open();
+      document.querySelector('#upload-file').click();
     }
   }
 
