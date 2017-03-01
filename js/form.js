@@ -24,13 +24,11 @@
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
   function onOpenByClick(event) {
-    event.preventDefault();
     open();
   }
 
   function onOpenByEnter(event) {
     if (window.helpers.isEnterKey(event)) {
-      event.preventDefault();
       open();
     }
   }
