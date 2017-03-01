@@ -4,8 +4,8 @@ window.initializeFilters = (function () {
   return function (filterLabels, callback) {
     var filters = document.querySelectorAll('.upload-filter-preview');
 
-    filterLabels.addEventListener('click', onSelectFilterByClick);
-    filterLabels.addEventListener('keydown', onSelectFilterByEnter);
+    filterLabels.addEventListener('click', onFilterLabelsClick);
+    filterLabels.addEventListener('keydown', onFilterLabelsKeydownEnter);
 
     var oldFilter = 'none';
     var newFilter;
@@ -43,13 +43,13 @@ window.initializeFilters = (function () {
       target.parentNode.previousElementSibling.setAttribute('checked', 'true');
     }
 
-    function onSelectFilterByEnter(event) {
+    function onFilterLabelsKeydownEnter(event) {
       if (window.helpers.isEnterKey(event)) {
         toggleFilter(event.target);
       }
     }
 
-    function onSelectFilterByClick(event) {
+    function onFilterLabelsClick(event) {
       event.preventDefault();
       if (event.target.classList.contains('upload-filter-preview')) {
         toggleFilter(event.target);
