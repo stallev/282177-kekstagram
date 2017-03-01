@@ -11,29 +11,28 @@ window.showGallery = (function () {
     overlay.classList.add('invisible');
   }
 
-  function onCloseByClick() {
+  function onCloseButtonClick() {
     close();
   }
 
-  function onKeyClose(event) {
+  function onCloseKeydownEnter(event) {
     if (window.helpers.isEnterKey(event)) {
       close();
     }
   }
 
-  function onCloseByEscape(event) {
+  function onCloseKeydownEscape(event) {
     if (window.helpers.isEscapeKey(event)) {
       close();
     }
   }
-
-  closeButton.addEventListener('click', onCloseByClick);
-  closeButton.addEventListener('keydown', onKeyClose);
-  document.addEventListener('keydown', onCloseByEscape);
-
   return function (element) {
     overlay.classList.remove('invisible');
     closeButton.focus();
+
+    closeButton.addEventListener('click', onCloseButtonClick);
+    closeButton.addEventListener('keydown', onCloseKeydownEnter);
+    document.addEventListener('keydown', onCloseKeydownEscape);
 
     previewImage.src = element.url;
     previewCommentsCount.innerHTML = element.comments.length;

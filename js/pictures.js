@@ -10,7 +10,7 @@ window.pictures = (function () {
     var elementToClone = elementTemplate.content.querySelector('.picture');
     var filters = document.querySelector('.filters');
 
-    filters.addEventListener('click', onSortByClick);
+    filters.addEventListener('click', onFiltersClick);
 
     window.load(url, onLoad);
     function onLoad(data) {
@@ -57,7 +57,7 @@ window.pictures = (function () {
       return newPicture;
     }
 
-    function onSortByClick(event) {
+    function onFiltersClick(event) {
       if (event.target.classList.contains('filters-item')) {
         removeImages();
         var array = sortPictures(event.target.htmlFor);
@@ -82,15 +82,19 @@ window.pictures = (function () {
 
     function sortPicturesByDiscussions(copy) {
       return copy.sort(function (a, b) {
-        return a.comments.length - b.comments.length;
+        return b.comments.length - a.comments.length;
       });
     }
 
     function sortPicturesByNew(array) {
-      var copy = array.slice(0);
-      return copy.sort(function () {
-        return Math.random() < 0.5;
-      }).slice(0, 10);
+      var picturesCount = 10;
+      var modifiedArray = [];
+      while (modifiedArray.length < picturesCount) {
+        var randomIndex = Math.floor(Math.random() * array.length);
+        modifiedArray.push(array[randomIndex]);
+        array.splice(randomIndex, 1);
+      }
+      return modifiedArray;
     }
   };
 })();

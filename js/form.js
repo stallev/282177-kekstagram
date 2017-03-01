@@ -3,7 +3,8 @@
 (function () {
   var formWrapperChangingImage = document.querySelector('.upload-overlay');
   var formSelectingImage = document.getElementById('upload-select-image');
-  var fileInput = document.querySelector('.upload-file');
+  var fileInputLabel = document.querySelector('.upload-file');
+  var fileInputField = document.querySelector('#upload-file');
   var buttonCloseModal = formWrapperChangingImage.querySelector('.upload-form-cancel');
   var scaleControls = formWrapperChangingImage.querySelector('.upload-resize-controls');
   var image = formWrapperChangingImage.querySelector('.upload-form-preview > img');
@@ -14,24 +15,22 @@
 
   formWrapperChangingImage.classList.add('invisible');
   formSelectingImage.classList.remove('invisible');
-  fileInput.addEventListener('click', onOpenByClick);
-  fileInput.addEventListener('keydown', onOpenByEnter);
-  buttonCloseModal.addEventListener('click', onCloseByClick);
-  document.addEventListener('keydown', onCloseByEscape);
+  fileInputLabel.addEventListener('change', onFileInputChange);
+  fileInputLabel.addEventListener('keydown', onFileInputKeydownEnter);
+  buttonCloseModal.addEventListener('click', onButtonCloseModalClick);
+  document.addEventListener('keydown', onCloseKeydownEscape);
 
   window.pictures();
   window.initializeFilters(filterLabels, applyFilter);
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
-  function onOpenByClick(event) {
-    event.preventDefault();
+  function onFileInputChange() {
     open();
   }
 
-  function onOpenByEnter(event) {
+  function onFileInputKeydownEnter(event) {
     if (window.helpers.isEnterKey(event)) {
-      event.preventDefault();
-      open();
+      fileInputField.click();
     }
   }
 
@@ -45,12 +44,12 @@
     formSelectingImage.classList.remove('invisible');
   }
 
-  function onCloseByClick(event) {
+  function onButtonCloseModalClick(event) {
     event.preventDefault();
     close();
   }
 
-  function onCloseByEscape(event) {
+  function onCloseKeydownEscape(event) {
     if (window.helpers.isEscapeKey(event)) {
       close();
     }
