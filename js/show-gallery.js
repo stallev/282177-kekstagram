@@ -26,14 +26,13 @@ window.showGallery = (function () {
       close();
     }
   }
-
-  closeButton.addEventListener('click', onCloseByClick);
-  closeButton.addEventListener('keydown', onKeyClose);
-  document.addEventListener('keydown', onCloseByEscape);
-
   return function (element) {
     overlay.classList.remove('invisible');
     closeButton.focus();
+
+    closeButton.addEventListener('click', onCloseByClick);
+    closeButton.addEventListener('keydown', onKeyClose);
+    document.addEventListener('keydown', onCloseByEscape);
 
     previewImage.src = element.url;
     previewCommentsCount.innerHTML = element.comments.length;
