@@ -23,7 +23,7 @@
   window.initializeFilters(filterLabels, applyFilter);
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
-  function onFileInputClick(event) {
+  function onFileInputClick() {
     open();
   }
 
