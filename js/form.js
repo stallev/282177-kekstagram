@@ -14,20 +14,20 @@
 
   formWrapperChangingImage.classList.add('invisible');
   formSelectingImage.classList.remove('invisible');
-  fileInput.addEventListener('click', onFileInputOpenEditingFormClick);
-  fileInput.addEventListener('keydown', onFileInputOpenEditingFormByEnter);
+  fileInput.addEventListener('click', onFileInputClick);
+  fileInput.addEventListener('keydown', onFileInputByEnter);
   buttonCloseModal.addEventListener('click', onButtonCloseModalClick);
-  document.addEventListener('keydown', onCloseOpenEditingFormByEscape);
+  document.addEventListener('keydown', onCloseByEscape);
 
   window.pictures();
   window.initializeFilters(filterLabels, applyFilter);
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
-  function onFileInputOpenEditingFormClick(event) {
+  function onFileInputClick(event) {
     open();
   }
 
-  function onFileInputOpenEditingFormByEnter(event) {
+  function onFileInputByEnter(event) {
     if (window.helpers.isEnterKey(event)) {
       open();
     }
@@ -48,7 +48,7 @@
     close();
   }
 
-  function onCloseOpenEditingFormByEscape(event) {
+  function onCloseByEscape(event) {
     if (window.helpers.isEscapeKey(event)) {
       close();
     }

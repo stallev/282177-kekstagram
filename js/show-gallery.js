@@ -11,17 +11,17 @@ window.showGallery = (function () {
     overlay.classList.add('invisible');
   }
 
-  function onCloseButtonWidgetCloseClick() {
+  function onCloseButtonClick() {
     close();
   }
 
-  function onCloseWidgetByEnter(event) {
+  function onCloseByEnter(event) {
     if (window.helpers.isEnterKey(event)) {
       close();
     }
   }
 
-  function onCloseWidgetByEscape(event) {
+  function onCloseByEscape(event) {
     if (window.helpers.isEscapeKey(event)) {
       close();
     }
@@ -30,9 +30,9 @@ window.showGallery = (function () {
     overlay.classList.remove('invisible');
     closeButton.focus();
 
-    closeButton.addEventListener('click', onCloseButtonWidgetCloseClick);
-    closeButton.addEventListener('keydown', onCloseWidgetByEnter);
-    document.addEventListener('keydown', onCloseWidgetByEscape);
+    closeButton.addEventListener('click', onCloseButtonClick);
+    closeButton.addEventListener('keydown', onCloseByEnter);
+    document.addEventListener('keydown', onCloseByEscape);
 
     previewImage.src = element.url;
     previewCommentsCount.innerHTML = element.comments.length;
