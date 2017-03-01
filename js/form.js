@@ -14,7 +14,7 @@
 
   formWrapperChangingImage.classList.add('invisible');
   formSelectingImage.classList.remove('invisible');
-  fileInput.addEventListener('click', onFileInputClick);
+  fileInput.addEventListener('change', onFileInputClick);
   fileInput.addEventListener('keydown', onFileInputByEnter);
   buttonCloseModal.addEventListener('click', onButtonCloseModalClick);
   document.addEventListener('keydown', onCloseByEscape);
