@@ -25,7 +25,8 @@
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
   function onFileInputFieldChange() {
-    open();
+    formWrapperChangingImage.classList.remove('invisible');
+    formSelectingImage.classList.add('invisible');
   }
 
   function onFileInputLabelKeydownEnter(event) {
@@ -33,11 +34,6 @@
     if (window.helpers.isEnterKey(event)) {
       fileInputField.click();
     }
-  }
-
-  function open() {
-    formWrapperChangingImage.classList.remove('invisible');
-    formSelectingImage.classList.add('invisible');
   }
 
   function close() {
