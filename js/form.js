@@ -18,7 +18,7 @@
   fileInputLabel.addEventListener('change', onFileInputChange);
   fileInputLabel.addEventListener('keydown', onFileInputKeydownEnter);
   buttonCloseModal.addEventListener('click', onButtonCloseModalClick);
-  document.addEventListener('keydown', onCloseKeydownEscape);
+  document.addEventListener('keydown', onDocumentKeydownEscape);
 
   window.pictures();
   window.initializeFilters(filterLabels, applyFilter);
@@ -49,7 +49,7 @@
     close();
   }
 
-  function onCloseKeydownEscape(event) {
+  function onDocumentKeydownEscape(event) {
     if (window.helpers.isEscapeKey(event)) {
       close();
     }
