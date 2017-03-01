@@ -10,7 +10,7 @@ window.pictures = (function () {
     var elementToClone = elementTemplate.content.querySelector('.picture');
     var filters = document.querySelector('.filters');
 
-    filters.addEventListener('click', onSortByClick);
+    filters.addEventListener('click', onFiltersSortPicturesClick);
 
     window.load(url, onLoad);
     function onLoad(data) {
@@ -57,7 +57,7 @@ window.pictures = (function () {
       return newPicture;
     }
 
-    function onSortByClick(event) {
+    function onFiltersSortPicturesClick(event) {
       if (event.target.classList.contains('filters-item')) {
         removeImages();
         var array = sortPictures(event.target.htmlFor);
