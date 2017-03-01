@@ -87,10 +87,14 @@ window.pictures = (function () {
     }
 
     function sortPicturesByNew(array) {
-      var copy = array.slice(0);
-      return copy.sort(function () {
-        return Math.random() < 0.5;
-      }).slice(0, 10);
+      var picturesCount = 10;
+      var modifiedArray = [];
+      while (modifiedArray.length < picturesCount) {
+        var randomIndex = Math.floor(Math.random() * array.length);
+        modifiedArray.push(array[randomIndex]);
+        array.splice(randomIndex, 1);
+      }
+      return modifiedArray;
     }
   };
 })();
