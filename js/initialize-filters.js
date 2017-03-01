@@ -5,7 +5,7 @@ window.initializeFilters = (function () {
     var filters = document.querySelectorAll('.upload-filter-preview');
 
     filterLabels.addEventListener('click', onFilterLabelsClick);
-    filterLabels.addEventListener('keydown', onFilterLabelsByEnter);
+    filterLabels.addEventListener('keydown', onFilterLabelsKeydownEnter);
 
     var oldFilter = 'none';
     var newFilter;
@@ -43,7 +43,7 @@ window.initializeFilters = (function () {
       target.parentNode.previousElementSibling.setAttribute('checked', 'true');
     }
 
-    function onFilterLabelsByEnter(event) {
+    function onFilterLabelsKeydownEnter(event) {
       if (window.helpers.isEnterKey(event)) {
         toggleFilter(event.target);
       }

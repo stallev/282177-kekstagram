@@ -81,8 +81,8 @@ window.pictures = (function () {
     }
 
     function sortPicturesByDiscussions(copy) {
-      return copy.sort(function (b, a) {
-        return a.comments.length - b.comments.length;
+      return copy.sort(function (a, b) {
+        return b.comments.length - a.comments.length;
       });
     }
 

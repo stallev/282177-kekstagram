@@ -15,20 +15,20 @@
 
   formWrapperChangingImage.classList.add('invisible');
   formSelectingImage.classList.remove('invisible');
-  fileInputLabel.addEventListener('change', onFileInputClick);
-  fileInputLabel.addEventListener('keydown', onFileInputByEnter);
+  fileInputLabel.addEventListener('change', onFileInputChange);
+  fileInputLabel.addEventListener('keydown', onFileInputKeydownEnter);
   buttonCloseModal.addEventListener('click', onButtonCloseModalClick);
-  document.addEventListener('keydown', onCloseByEscape);
+  document.addEventListener('keydown', onCloseKeydownEscape);
 
   window.pictures();
   window.initializeFilters(filterLabels, applyFilter);
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
-  function onFileInputClick() {
+  function onFileInputChange() {
     open();
   }
 
-  function onFileInputByEnter(event) {
+  function onFileInputKeydownEnter(event) {
     if (window.helpers.isEnterKey(event)) {
       fileInputField.click();
     }
@@ -49,7 +49,7 @@
     close();
   }
 
-  function onCloseByEscape(event) {
+  function onCloseKeydownEscape(event) {
     if (window.helpers.isEscapeKey(event)) {
       close();
     }

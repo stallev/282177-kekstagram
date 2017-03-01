@@ -15,13 +15,13 @@ window.showGallery = (function () {
     close();
   }
 
-  function onCloseByEnter(event) {
+  function onCloseKeydownEnter(event) {
     if (window.helpers.isEnterKey(event)) {
       close();
     }
   }
 
-  function onCloseByEscape(event) {
+  function onCloseKeydownEscape(event) {
     if (window.helpers.isEscapeKey(event)) {
       close();
     }
@@ -31,8 +31,8 @@ window.showGallery = (function () {
     closeButton.focus();
 
     closeButton.addEventListener('click', onCloseButtonClick);
-    closeButton.addEventListener('keydown', onCloseByEnter);
-    document.addEventListener('keydown', onCloseByEscape);
+    closeButton.addEventListener('keydown', onCloseKeydownEnter);
+    document.addEventListener('keydown', onCloseKeydownEscape);
 
     previewImage.src = element.url;
     previewCommentsCount.innerHTML = element.comments.length;
