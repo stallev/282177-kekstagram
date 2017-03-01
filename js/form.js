@@ -3,8 +3,8 @@
 (function () {
   var formWrapperChangingImage = document.querySelector('.upload-overlay');
   var formSelectingImage = document.getElementById('upload-select-image');
-  var fileInputLabel = document.querySelector('.upload-file');
   var fileInputField = document.querySelector('#upload-file');
+  var fileInputLabel = document.querySelector('.upload-file');
   var buttonCloseModal = formWrapperChangingImage.querySelector('.upload-form-cancel');
   var scaleControls = formWrapperChangingImage.querySelector('.upload-resize-controls');
   var image = formWrapperChangingImage.querySelector('.upload-form-preview > img');
@@ -15,8 +15,8 @@
 
   formWrapperChangingImage.classList.add('invisible');
   formSelectingImage.classList.remove('invisible');
-  fileInputLabel.addEventListener('change', onFileInputChange);
-  fileInputLabel.addEventListener('keydown', onFileInputKeydownEnter);
+  fileInputField.addEventListener('change', onFileInputFieldChange);
+  fileInputLabel.addEventListener('keydown', onFileInputLabelKeydownEnter);
   buttonCloseModal.addEventListener('click', onButtonCloseModalClick);
   document.addEventListener('keydown', onDocumentKeydownEscape);
 
@@ -24,11 +24,12 @@
   window.initializeFilters(filterLabels, applyFilter);
   window.initializeScale(scaleControls, imageSizeStep, imageSizeValue, applyScale);
 
-  function onFileInputChange() {
+  function onFileInputFieldChange() {
     open();
   }
 
-  function onFileInputKeydownEnter(event) {
+  function onFileInputLabelKeydownEnter(event) {
+    event.preventDefault();
     if (window.helpers.isEnterKey(event)) {
       fileInputField.click();
     }
