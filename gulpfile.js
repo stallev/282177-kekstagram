@@ -23,8 +23,8 @@ gulp.task('clean', function () {
   return del('build');
 });
 
-gulp.task('build', function () {
-  run('clean', 'build');
+gulp.task('build', function (fn) {
+  run('clean', 'copy', fn);
 });
 
 gulp.task('deploy', function () {
