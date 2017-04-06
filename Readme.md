@@ -3,6 +3,8 @@
 * Студент: [Александр Левшенко](https://up.htmlacademy.ru/javascript/8/user/282177).
 * Наставник: [Антон Калин] (https://htmlacademy.ru/profile/id38651).
 
+* Ссылка на проект: https://stallev.github.io/282177-kekstagram/
+
 ---
 
 _Не удаляйте и не обращайте внимание на папки и файлы:_<br>
