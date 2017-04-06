@@ -2,7 +2,7 @@
 
 window.pictures = (function () {
   return function () {
-    var url = 'https://intensive-javascript-server-myophkugvq.now.sh/kekstagram/data';
+    var url = 'https://intensive-javascript-server-pedmyactpq.now.sh/kekstagram/data';
     var pictures = [];
     var drawingPictures = [];
     var placeForSmallPictures = document.querySelector('.pictures');
