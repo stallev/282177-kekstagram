@@ -22,7 +22,9 @@
   },
   "dependencies": {},
   "scripts": {
-    "test": "eslint js/"
+    "test": "eslint js/",
+    "build": "gulp build",
+    "deploy": "gulp deploy"
   },
   "engines": {
     "node": "^6.9"
